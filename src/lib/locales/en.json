@@ -1,0 +1,166 @@
+{
+  "site_title": "Ve.Mu. Prashant Pathak (Guruji)",
+  "site_subtitle": "Vedic Puja & Religious Sanskar Services — Nagpur",
+  "mantra_ganesh": "|| श्री गणेशाय नमः ||",
+  "mantra_tryambak": "|| श्री त्र्यंबकेश्वराय नमः ||",
+  "main_tagline": "All Religious Rituals Conducted Strictly as per Vedic Shastras",
+  "official_desc": "All types of religious ceremonies and Vedic rituals conducted with complete Shastrokta authenticity: Vastu Shanti, Grah Shanti, Satyanarayan Puja, Rudra Abhishek, Nakshatra Shanti, Kalsarp Shanti, Vivah Sanskar, Upanayan Sanskar, Murti Pran Pratishtha, Udak Shanti, Navchandi Pujan, Laghurudra, and Vedic rituals. Janma Kundali preparation and astrological guidance available.",
+  "location": "Nagpur, Maharashtra",
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "services": "Services",
+    "book_puja": "Booking",
+    "events": "Events",
+    "gallery": "Gallery",
+    "videos": "Videos",
+    "testimonials": "Testimonials",
+    "blog": "Articles",
+    "faq": "FAQs",
+    "contact": "Contact",
+    "admin": "Admin"
+  },
+  "hero": {
+    "welcome": "Welcome to the Official Website of Vedmurti Prashant Pathak Guruji",
+    "cta_book": "Book Puja / Ritual",
+    "cta_whatsapp": "Connect on WhatsApp",
+    "cta_explore": "Explore Services"
+  },
+  "guruji_intro": {
+    "title": "Ve.Mu. Prashant Pathak (Guruji)",
+    "subtitle": "Vedic Tradition & Shastra-Conforming Sacred Ceremonies",
+    "desc_1": "Renowned and revered in Nagpur and across Maharashtra, Vedmurti Prashant Pathak Guruji conducts all Vedic pujas, shantis, and the sacred Shodasha Sanskars strictly according to authentic Vedic scriptures and mantras.",
+    "desc_2": "Our prime resolve is to invoke divine blessings, peace, health, and prosperity in every family. Ceremonies are planned with utmost reverence to auspicious Tithis, Nakshatras, and astrological Muhurats.",
+    "location_badge": "Service Area: Nagpur, Vidarbha & entire Maharashtra",
+    "experience_badge": "Vedic Shastrokta Tradition",
+    "read_more": "Learn More About Guruji",
+    "shastrokta_badge": "100% Authentic Shastrokta Tradition"
+  },
+  "services_sec": {
+    "title": "Key Pujas & Sacred Rituals",
+    "subtitle": "Holy ceremonies conducted with authentic Vedic mantras and sacred procedures",
+    "view_all": "View All Pujas & Services",
+    "view_details": "View Details",
+    "book_now": "Book Now",
+    "duration": "Duration",
+    "materials": "Required Materials",
+    "price_contact": "Contact for Dakshina / Fee"
+  },
+  "why_choose": {
+    "title": "The Sanctity of Shastrokta Rituals",
+    "subtitle": "Why Perform Rituals With Us?",
+    "f1_title": "Flawless Vedic Chanting",
+    "f1_desc": "Precise mantra pronunciation and strict adherence to Vedic injunctions.",
+    "f2_title": "Complete Samagri Guidance",
+    "f2_desc": "Comprehensive preparation guidance and item lists provided beforehand.",
+    "f3_title": "Muhurat & Sankalpa Purity",
+    "f3_desc": "Careful determination of auspicious planetary timing for lasting auspiciousness.",
+    "f4_title": "Kundali & Dosha Shanti",
+    "f4_desc": "Scientific Kundali analysis followed by proper Kalsarp, Graha, and Vastu remedies.",
+    "item1_title": "Flawless Vedic Chanting",
+    "item1_desc": "Precise mantra pronunciation and strict adherence to Vedic injunctions.",
+    "item2_title": "Complete Samagri Guidance",
+    "item2_desc": "Comprehensive preparation guidance and item lists provided beforehand.",
+    "item3_title": "Muhurat & Sankalpa Purity",
+    "item3_desc": "Careful determination of auspicious planetary timing for lasting auspiciousness."
+  },
+  "events_sec": {
+    "title": "Upcoming Religious Events & Festivals",
+    "subtitle": "Information on auspicious festivals, Mahaparvas, and special yajnas",
+    "view_all": "View All Events",
+    "date": "Date",
+    "time": "Time",
+    "venue": "Venue"
+  },
+  "gallery_sec": {
+    "title": "Sacred Photo Gallery",
+    "subtitle": "Memorable glimpses of various pujas, havans, and Vedic ceremonies",
+    "all_categories": "All",
+    "view_all": "View Full Gallery"
+  },
+  "testimonials_sec": {
+    "title": "Devotee Experiences & Gratitude",
+    "subtitle": "Heartfelt words and genuine experiences shared by hosts and families"
+  },
+  "faq_sec": {
+    "title": "Frequently Asked Questions (FAQ)",
+    "subtitle": "Common inquiries regarding puja procedures, muhurat, and bookings",
+    "view_all": "View All FAQs"
+  },
+  "booking_cta": {
+    "title": "Invite Divine Peace & Prosperity into Your Home",
+    "subtitle": "Reserve your auspicious date for Vastu Shanti, Vivah, Upanayan, Grah Shanti, or any Vedic ceremony today.",
+    "btn_book": "Book a Puja Ceremony",
+    "btn_whatsapp": "Inquire via WhatsApp"
+  },
+  "booking_page": {
+    "title": "Puja & Ritual Booking Request",
+    "subtitle": "Please submit your details below. Guruji will contact you to verify auspicious muhurats and preparations.",
+    "full_name": "Full Name",
+    "mobile": "Mobile Number",
+    "email": "Email Address (Optional)",
+    "select_service": "Select Puja / Ritual",
+    "select_service_placeholder": "-- Select a Service --",
+    "date": "Preferred Date",
+    "time": "Preferred Time (Morning / Afternoon / Evening)",
+    "people_count": "Approximate Attendees",
+    "address": "Address (House/Flat, Society)",
+    "area": "Locality / Colony",
+    "city": "City (e.g. Nagpur)",
+    "pincode": "Pincode",
+    "message": "Special requirements, Gotra, or Sankalpa details",
+    "submit_btn": "Submit Booking Request",
+    "submitting": "Submitting Request...",
+    "success_title": "Your Booking Request Has Been Successfully Registered!",
+    "success_desc": "Your Booking Reference ID:",
+    "success_note": "Prashant Pathak Guruji will contact you soon. You may also follow up directly on WhatsApp.",
+    "back_home": "Back to Home",
+    "status_pending": "Pending Verification"
+  },
+  "contact_page": {
+    "title": "Contact Us",
+    "subtitle": "Ve.Mu. Prashant Pathak (Guruji) — Nagpur",
+    "location_label": "Location:",
+    "whatsapp_label": "Official WhatsApp:",
+    "hours_label": "Consultation Hours:",
+    "hours_val": "7:00 AM – 9:00 PM (IST)",
+    "form_name": "Your Name",
+    "form_mobile": "Mobile Number",
+    "form_subject": "Subject",
+    "form_message": "Message",
+    "send_btn": "Send Message"
+  },
+  "footer": {
+    "mantra": "॥ Om Namah Shivaya ॥ Shubham Bhavatu ॥",
+    "about_title": "Ve.Mu. Prashant Pathak",
+    "quick_links": "Quick Links",
+    "services_links": "Popular Pujas",
+    "contact_info": "Contact Details",
+    "copyright": "All Rights Reserved © 2026 Ve.Mu. Prashant Pathak (Guruji). Nagpur, Maharashtra.",
+    "credits": "Dedicated to Authentic Vedic Tradition"
+  },
+  "common": {
+    "loading": "Loading details...",
+    "error": "Something went wrong. Please try again.",
+    "no_data": "No information currently available.",
+    "close": "Close",
+    "back": "Go Back",
+    "submit": "Submit",
+    "save": "Save Changes",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit"
+  },
+  "booking_flow": {
+    "title": "Sacred Ceremony Booking Process",
+    "subtitle": "Organize an authentic Vedic ceremony in your home in 4 simple steps",
+    "step1_title": "1 — Choose Sacred Ritual",
+    "step1_desc": "Select Vastu Shanti, Satyanarayan, or any required Vedic ceremony.",
+    "step2_title": "2 — Provide Details & Date",
+    "step2_desc": "Submit your preferred date, location, and family details online.",
+    "step3_title": "3 — Consultation with Guruji",
+    "step3_desc": "Guruji verifies planetary muhurats and provides the preparation checklist.",
+    "step4_title": "4 — Auspicious Ceremony",
+    "step4_desc": "Rituals conducted with holy mantras bringing peace and prosperity."
+  }
+}

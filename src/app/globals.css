@@ -1,0 +1,186 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-ivory: #FAF7F0;
+    --color-cream: #F3E8D0;
+    --color-saffron: #C86B24;
+    --color-maroon: #651C24;
+    --color-maroon-deep: #5A1720;
+    --color-maroon-dark: #421218;
+    --color-surface-dark: #321116;
+    --color-gold: #B58A3A;
+    --color-gold-light: #D8B96A;
+    --color-charcoal: #24211E;
+    --color-text-primary: #282321;
+    --color-text-muted: #6F625A;
+    --glass-white: rgba(255, 255, 255, 0.58);
+    --glass-ivory: rgba(250, 247, 240, 0.68);
+    --glass-maroon: rgba(90, 23, 32, 0.10);
+    --gold-border: rgba(184, 148, 74, 0.38);
+    --gold-border-rich: rgba(184, 148, 74, 0.55);
+  }
+
+  body {
+    background-color: #FAF7F0;
+    color: #24211E;
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans Devanagari', sans-serif;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Noto Serif Devanagari', 'Cinzel', 'Rozha One', Georgia, serif;
+    letter-spacing: -0.01em;
+  }
+}
+
+/* Liquid Glass System Classes */
+.liquid-glass-card {
+  background: rgba(255, 255, 255, 0.62);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(184, 148, 74, 0.38);
+  box-shadow: 0 8px 32px 0 rgba(90, 23, 32, 0.05), inset 0 1px 1px 0 rgba(255, 255, 255, 0.65);
+}
+
+.liquid-glass-card-ivory {
+  background: rgba(250, 247, 240, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(184, 148, 74, 0.38);
+  box-shadow: 0 8px 32px 0 rgba(90, 23, 32, 0.05), inset 0 1px 1px 0 rgba(255, 255, 255, 0.65);
+}
+
+.liquid-glass-dark {
+  background: rgba(50, 17, 22, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(184, 148, 74, 0.40);
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.35), inset 0 1px 1px 0 rgba(216, 185, 106, 0.25);
+}
+
+.liquid-glass-input {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(184, 148, 74, 0.38);
+  transition: all 0.2s ease-in-out;
+}
+
+.liquid-glass-input:focus {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(181, 138, 58, 0.8);
+  box-shadow: 0 0 0 3px rgba(181, 138, 58, 0.18);
+}
+
+.liquid-glass-btn-primary {
+  background: linear-gradient(135deg, #651C24 0%, #5A1720 50%, #421218 100%);
+  border: 1px solid rgba(216, 185, 106, 0.45);
+  color: #FAF7F0;
+  box-shadow: 0 4px 16px -2px rgba(66, 18, 24, 0.35), inset 0 1px 1px 0 rgba(255, 255, 255, 0.2);
+  transition: all 0.2s ease-in-out;
+}
+
+.liquid-glass-btn-primary:hover {
+  background: linear-gradient(135deg, #741A26 0%, #651C24 50%, #4E151B 100%);
+  border-color: rgba(216, 185, 106, 0.75);
+  box-shadow: 0 6px 20px -2px rgba(66, 18, 24, 0.45);
+}
+
+.liquid-glass-btn-gold {
+  background: linear-gradient(135deg, rgba(216, 185, 106, 0.9) 0%, rgba(181, 138, 58, 0.95) 100%);
+  border: 1px solid rgba(184, 148, 74, 0.6);
+  color: #24211E;
+  box-shadow: 0 4px 16px -2px rgba(181, 138, 58, 0.3), inset 0 1px 1px 0 rgba(255, 255, 255, 0.5);
+  transition: all 0.2s ease-in-out;
+}
+
+.liquid-glass-btn-gold:hover {
+  background: linear-gradient(135deg, #D8B96A 0%, #B58A3A 100%);
+  box-shadow: 0 6px 22px -2px rgba(181, 138, 58, 0.45);
+}
+
+/* Subtle Temple Jali Background Pattern */
+.bg-jali-pattern {
+  background-color: #FAF7F0;
+  background-image: radial-gradient(#B58A3A 0.65px, transparent 0.65px), radial-gradient(#651C24 0.65px, #FAF7F0 0.65px);
+  background-size: 26px 26px;
+  background-position: 0 0, 13px 13px;
+  background-blend-mode: multiply;
+  opacity: 0.98;
+}
+
+.bg-jali-subtle {
+  background-image: radial-gradient(rgba(181, 138, 58, 0.12) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Sacred Hairline Borders */
+.gold-hairline {
+  border: 1px solid rgba(181, 138, 58, 0.35);
+}
+
+.gold-hairline-b {
+  border-bottom: 1px solid rgba(181, 138, 58, 0.30);
+}
+
+.gold-hairline-t {
+  border-top: 1px solid rgba(181, 138, 58, 0.30);
+}
+
+/* Temple Arch Framing */
+.arch-frame {
+  border-top-left-radius: 12rem;
+  border-top-right-radius: 12rem;
+  border-bottom-left-radius: 1.5rem;
+  border-bottom-right-radius: 1.5rem;
+}
+
+.arch-frame-sm {
+  border-top-left-radius: 6rem;
+  border-top-right-radius: 6rem;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+}
+
+/* Sacred Text & Surface Gradients */
+.gold-gradient-text {
+  background: linear-gradient(135deg, #805E21 0%, #B58A3A 40%, #D8B96A 75%, #9C732B 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.maroon-gradient-bg {
+  background: linear-gradient(145deg, #421218 0%, #651C24 55%, #4E151B 100%);
+}
+
+.gold-gradient-bg {
+  background: linear-gradient(135deg, #B58A3A 0%, #D8B96A 50%, #9C732B 100%);
+}
+
+/* Custom Spiritual Scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FAF7F0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #B58A3A;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #651C24;
+}
+
+/* Focus styles for keyboard accessibility */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 2px solid #B58A3A;
+  outline-offset: 2px;
+}
