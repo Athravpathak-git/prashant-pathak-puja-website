@@ -1,26 +1,28 @@
-import { Pool, PoolClient, QueryResult, QueryResultRow } from 'pg';
+import { Pool, type PoolClient, type QueryResult, type QueryResultRow } from 'pg';
 
-const EXPECTED_DATABASE = 'prashant_pathak_puja_db';
-const EXPECTED_USER = 'prashant_pathak_app';
-const EXPECTED_APP_IDENTIFIER = 'prashant_pathak_guruji_website';
-
-// Use the dedicated database URL
-const connectionString = process.env.DATABASE_URL || 'postgresql://prashant_pathak_app:%23Athr2007@localhost:5432/prashant_pathak_puja_db';
+const EXPECTED_DATABASE = process.env.EXPECTED_DATABASE || 'prashant_pathak_puja_db';
+const EXPECTED_USER = process.env.EXPECTED_USER || 'prashant_pathak_app';
+const EXPECTED_APP_IDENTIFIER = process.env.EXPECTED_APP_IDENTIFIER || 'prashant_pathak_guruji_website';
 
 let pool: Pool | null = null;
 let isVerified = false;
 
 export function getPool(): Pool {
   if (!pool) {
+    const databaseUrl = process.env.DATABASE_URL?.trim();
+
+    if (!databaseUrl) {
+      throw new Error(
+        '[CRITICAL DATABASE CONFIG ERROR] process.env.DATABASE_URL is not set. A valid PostgreSQL connection string is required.'
+      );
+    }
+
     pool = new Pool({
-      user: 'prashant_pathak_app',
-      password: process.env.DB_PASSWORD || '#Athr2007',
-      host: process.env.DB_HOST || 'localhost',
-      port: Number(process.env.DB_PORT) || 5432,
-      database: EXPECTED_DATABASE,
+      connectionString: databaseUrl,
       max: 15,
       idleTimeoutMillis: 30000,
-      connectionTimeoutMillis: 5000,
+      connectionTimeoutMillis: 10000,
+      ...(process.env.DATABASE_SSL === 'true' && { ssl: { rejectUnauthorized: false } }),
     });
 
     pool.on('error', (err) => {
