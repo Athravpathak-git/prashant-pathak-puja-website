@@ -7,6 +7,7 @@ import {
   VedicSectionHeader,
   TemplePattern,
   SacredCorner,
+  SacredAccentLine,
 } from '@/components/VedicDesignSystem';
 import {
   GlassCard,
@@ -68,7 +69,7 @@ export default function BlogPage() {
                     <span className="px-3 py-1 rounded-full bg-[#FAF7F0] text-[#5A1720] font-serif font-bold border border-[#B58A3A]/40 shadow-xs">
                       {featured.category || 'धार्मिक माहिती'}
                     </span>
-                    <span className="flex items-center gap-1.5 font-serif text-[#C86B24] font-medium">
+                    <span className="flex items-center gap-1.5 font-serif text-[#944B14] font-semibold">
                       <Calendar className="w-3.5 h-3.5" />
                       {new Date(featured.published_at || featured.created_at).toLocaleDateString(
                         language === 'mr' ? 'mr-IN' : 'en-US',
@@ -109,14 +110,14 @@ export default function BlogPage() {
                     hoverEffect
                     className="border border-[#B58A3A]/40 overflow-hidden flex flex-col justify-between group"
                   >
-                    <div className="h-1 bg-gradient-to-r from-[#5A1720] via-[#C86B24] to-[#B58A3A]" />
+                    <SacredAccentLine />
 
                     <div className="p-6 sm:p-7 space-y-4">
                       <div className="flex items-center justify-between text-xs text-[#6F625A]">
                         <span className="px-2.5 py-0.5 rounded-full bg-[#FAF7F0] text-[#5A1720] font-serif font-semibold border border-[#B58A3A]/30">
                           {post.category || 'धार्मिक माहिती'}
                         </span>
-                        <span className="flex items-center gap-1.5 font-serif text-[#C86B24] font-medium text-[11px]">
+                        <span className="flex items-center gap-1.5 font-serif text-[#944B14] font-semibold text-[11px]">
                           <Calendar className="w-3.5 h-3.5" />
                           {new Date(post.published_at || post.created_at).toLocaleDateString(
                             language === 'mr' ? 'mr-IN' : 'en-US',
@@ -125,7 +126,7 @@ export default function BlogPage() {
                         </span>
                       </div>
 
-                      <h3 className="font-serif font-bold text-lg text-[#321116] leading-snug group-hover:text-[#C86B24] transition-colors">
+                      <h3 className="font-serif font-bold text-lg text-[#321116] leading-snug group-hover:text-[#944B14] transition-colors">
                         {getLocalized(post, 'title')}
                       </h3>
 
@@ -137,7 +138,7 @@ export default function BlogPage() {
                     <div className="bg-[#FAF7F0]/80 px-6 sm:px-7 py-3.5 border-t border-[#B58A3A]/25">
                       <Link
                         href={`/blog/${post.slug || post.id}`}
-                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#5A1720] hover:text-[#C86B24] transition-colors font-serif"
+                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#5A1720] hover:text-[#944B14] transition-colors font-serif"
                       >
                         <span>{language === 'mr' ? 'संपूर्ण लेख वाचा' : 'Read Full Article'}</span>
                         <ArrowRight className="w-3.5 h-3.5" />

@@ -10,6 +10,7 @@ import {
   TemplePattern,
   DiyaIcon,
   KalashIcon,
+  SacredAccentLine,
 } from '@/components/VedicDesignSystem';
 import {
   GlassCard,
@@ -87,7 +88,7 @@ export default function ServicesPage() {
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
               <div className="md:col-span-8 space-y-4">
                 <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-[#FDF2F4] text-[#5A1720] border border-[#A32938]/30">
-                  <Sparkles className="w-3.5 h-3.5 text-[#C86B24]" />
+                  <Sparkles className="w-3.5 h-3.5 text-[#944B14]" />
                   <span>विशेष विधी (Featured Puja)</span>
                 </div>
 
@@ -194,12 +195,12 @@ export default function ServicesPage() {
               className="flex flex-col border border-[#B58A3A]/40 group"
             >
               {/* Header Accent Band */}
-              <div className="h-1 bg-gradient-to-r from-[#5A1720] via-[#C86B24] to-[#B58A3A]" />
+              <SacredAccentLine />
 
               <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
                 <div>
                   <div className="flex items-start justify-between gap-2 mb-2.5">
-                    <h3 className="font-serif font-bold text-base sm:text-lg text-[#321116] group-hover:text-[#C86B24] transition-colors">
+                    <h3 className="font-serif font-bold text-base sm:text-lg text-[#321116] group-hover:text-[#944B14] transition-colors">
                       {getLocalized(service, 'name')}
                     </h3>
                     <span className="shrink-0 text-[11px] px-2.5 py-0.5 rounded-full bg-[#FAF7F0] text-[#5A1720] font-serif font-medium border border-[#B58A3A]/30">
@@ -214,7 +215,7 @@ export default function ServicesPage() {
 
                 {service.duration && (
                   <div className="pt-3 border-t border-[#B58A3A]/20 text-xs flex items-center gap-2 text-[#6F625A] font-medium">
-                    <Clock className="w-3.5 h-3.5 text-[#C86B24]" />
+                    <Clock className="w-3.5 h-3.5 text-[#944B14]" />
                     <span>{service.duration}</span>
                   </div>
                 )}
@@ -224,7 +225,7 @@ export default function ServicesPage() {
               <div className="bg-[#FAF7F0]/80 px-6 py-3.5 border-t border-[#B58A3A]/25 flex items-center justify-between text-xs">
                 <Link
                   href={`/services/${service.slug || service.id}`}
-                  className="font-medium text-[#5A1720] hover:text-[#C86B24] transition-colors flex items-center gap-1 font-serif"
+                  className="font-medium text-[#5A1720] hover:text-[#944B14] transition-colors flex items-center gap-1 font-serif"
                 >
                   <span>{t('services_sec.view_details')}</span>
                   <span>→</span>

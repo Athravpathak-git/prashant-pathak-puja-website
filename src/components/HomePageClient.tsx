@@ -14,6 +14,7 @@ import {
   SacredCorner,
   TemplePattern,
   MandalaBackground,
+  SacredAccentLine,
 } from '@/components/VedicDesignSystem';
 import {
   GlassCard,
@@ -166,9 +167,10 @@ export function HomePageClient({
               <GlassCard
                 variant="white"
                 padding="p-4 sm:p-5"
-                className="border-l-4 border-l-[#5A1720] border-[#B58A3A]/40 shadow-xs relative text-left"
+                className="border border-[#B58A3A]/50 shadow-xs relative text-left"
               >
                 <SacredCorner position="top-right" />
+                <SacredCorner position="bottom-left" />
                 <p className="text-xs sm:text-sm text-[#282321] leading-relaxed font-serif italic">
                   &ldquo;{t('official_desc')}&rdquo;
                 </p>
@@ -228,6 +230,8 @@ export function HomePageClient({
                     <img
                       src={gurujiPhoto}
                       alt="वे.मु. प्रशांत पाठक (गुरुजी)"
+                      loading="eager"
+                      decoding="async"
                       className="w-full h-full object-cover rounded-t-[10.5rem] sm:rounded-t-[13.5rem] rounded-b-xl"
                     />
                   ) : (
@@ -237,7 +241,7 @@ export function HomePageClient({
                         <h2 className="font-serif font-bold text-xl text-[#321116]">
                           {language === 'mr' ? 'वे.मु. प्रशांत पाठक' : 'Ve.Mu. Prashant Pathak'}
                         </h2>
-                        <p className="text-xs text-[#C86B24] font-semibold tracking-wider font-serif">
+                        <p className="text-xs text-[#944B14] font-bold tracking-wider font-serif">
                           ॥ वैदिक पुरोहित सेवा ॥
                         </p>
                       </div>
@@ -258,7 +262,7 @@ export function HomePageClient({
                       <p className="font-serif font-bold text-xs text-[#321116] leading-tight">
                         वे.मु. प्रशांत पाठक
                       </p>
-                      <p className="text-[10px] text-[#C86B24] font-medium">
+                      <p className="text-[10px] text-[#944B14] font-semibold">
                         अधिकृत वैदिक पुरोहित
                       </p>
                     </div>
@@ -343,7 +347,7 @@ export function HomePageClient({
                 </p>
                 <Link
                   href="/about"
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#C86B24] hover:text-[#5A1720] pt-1 hover:underline transition-colors"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#944B14] hover:text-[#5A1720] pt-1 hover:underline transition-colors"
                 >
                   <span>{t('guruji_intro.read_more')}</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -367,7 +371,7 @@ export function HomePageClient({
               <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#321116]">
                 {t('services_sec.title')}
               </h2>
-              <p className="text-xs sm:text-sm text-[#C86B24] font-serif mt-1">
+              <p className="text-xs sm:text-sm text-[#944B14] font-serif font-semibold mt-1">
                 {t('services_sec.subtitle')}
               </p>
             </div>
@@ -391,12 +395,12 @@ export function HomePageClient({
                 className="flex flex-col border border-[#B58A3A]/40 group"
               >
                 {/* Architectural Gold Top Header Line */}
-                <div className="h-1 bg-gradient-to-r from-[#5A1720] via-[#C86B24] to-[#B58A3A]" />
+                <SacredAccentLine />
 
                 <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
                   <div>
                     <div className="flex items-start justify-between gap-2 mb-2.5">
-                      <h3 className="font-serif font-bold text-base sm:text-lg text-[#321116] group-hover:text-[#C86B24] transition-colors">
+                      <h3 className="font-serif font-bold text-base sm:text-lg text-[#321116] group-hover:text-[#944B14] transition-colors">
                         {getLocalized(service, 'name')}
                       </h3>
                       <span className="shrink-0 text-[11px] px-2.5 py-0.5 rounded-full bg-[#FAF7F0] text-[#5A1720] font-serif font-medium border border-[#B58A3A]/30">
@@ -411,7 +415,7 @@ export function HomePageClient({
 
                   {service.duration && (
                     <div className="pt-3 border-t border-[#B58A3A]/20 text-xs flex items-center gap-2 text-[#6F625A] font-medium">
-                      <Clock className="w-3.5 h-3.5 text-[#C86B24]" />
+                      <Clock className="w-3.5 h-3.5 text-[#944B14]" />
                       <span>{service.duration}</span>
                     </div>
                   )}
@@ -421,7 +425,7 @@ export function HomePageClient({
                 <div className="bg-[#FAF7F0]/80 px-6 py-3.5 border-t border-[#B58A3A]/25 flex items-center justify-between text-xs">
                   <Link
                     href={`/services/${service.slug || service.id}`}
-                    className="font-medium text-[#5A1720] hover:text-[#C86B24] transition-colors flex items-center gap-1 font-serif"
+                    className="font-medium text-[#5A1720] hover:text-[#944B14] transition-colors flex items-center gap-1 font-serif"
                   >
                     <span>{t('services_sec.view_details')}</span>
                     <span>→</span>
@@ -751,7 +755,7 @@ export function HomePageClient({
                 <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#321116]">
                   {t('gallery_sec.title')}
                 </h2>
-                <p className="text-xs sm:text-sm text-[#C86B24] font-serif mt-1">
+                <p className="text-xs sm:text-sm text-[#944B14] font-semibold font-serif mt-1">
                   {t('gallery_sec.subtitle')}
                 </p>
               </div>

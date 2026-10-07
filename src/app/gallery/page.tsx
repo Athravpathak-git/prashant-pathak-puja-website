@@ -124,6 +124,8 @@ export default function GalleryPage() {
                   <img
                     src={item.image_url}
                     alt={getLocalized(item, 'title') || 'Puja Ritual'}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   {/* Subtle Top Glare Reflection */}

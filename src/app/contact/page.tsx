@@ -73,7 +73,7 @@ export default function ContactPage() {
                   <h3 className="font-serif font-bold text-base sm:text-lg text-[#321116]">
                     {language === 'mr' ? 'वे.मु. प्रशांत पाठक (गुरुजी)' : 'Ve.Mu. Prashant Pathak (Guruji)'}
                   </h3>
-                  <p className="text-xs text-[#C86B24] font-serif font-medium">
+                  <p className="text-xs text-[#944B14] font-serif font-semibold">
                     {language === 'mr' ? 'शास्त्रोक्त वैदिक पुरोहित' : 'Vedic Purohit Services'}
                   </p>
                 </div>
@@ -107,7 +107,7 @@ export default function ContactPage() {
 
                 {/* Consultation Hours */}
                 <div className="flex items-start gap-3">
-                  <Clock className="w-5 h-5 text-[#C86B24] shrink-0 mt-0.5" />
+                  <Clock className="w-5 h-5 text-[#944B14] shrink-0 mt-0.5" />
                   <div>
                     <span className="font-bold block text-[#321116]">
                       {t('contact_page.hours_label')}

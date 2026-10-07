@@ -7,6 +7,7 @@ import {
   VedicSectionHeader,
   TemplePattern,
   SacredCorner,
+  SacredAccentLine,
 } from '@/components/VedicDesignSystem';
 import {
   GlassCard,
@@ -56,7 +57,7 @@ export default function EventsPage() {
                 hoverEffect
                 className="border border-[#B58A3A]/45 flex flex-col justify-between group"
               >
-                <div className="h-1 bg-gradient-to-r from-[#5A1720] via-[#C86B24] to-[#B58A3A]" />
+                <SacredAccentLine />
 
                 <div className="p-6 sm:p-8 space-y-4">
                   {/* Date & Time Badges */}
@@ -71,13 +72,13 @@ export default function EventsPage() {
                     </span>
                     {ev.event_time && (
                       <span className="inline-flex items-center gap-1.5 text-xs text-[#282321] bg-[#FAF7F0] px-3 py-1 rounded-full border border-[#B58A3A]/30 font-serif">
-                        <Clock className="w-3.5 h-3.5 text-[#C86B24]" />
+                        <Clock className="w-3.5 h-3.5 text-[#944B14]" />
                         {ev.event_time}
                       </span>
                     )}
                   </div>
 
-                  <h3 className="font-serif font-bold text-xl text-[#321116] group-hover:text-[#C86B24] transition-colors">
+                  <h3 className="font-serif font-bold text-xl text-[#321116] group-hover:text-[#944B14] transition-colors">
                     {getLocalized(ev, 'title')}
                   </h3>
 

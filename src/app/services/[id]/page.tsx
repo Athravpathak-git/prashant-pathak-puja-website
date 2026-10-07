@@ -90,7 +90,7 @@ export default function ServiceDetailPage() {
         <div>
           <Link
             href="/services"
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#5A1720] hover:text-[#C86B24] transition-colors font-serif"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#5A1720] hover:text-[#944B14] transition-colors font-serif"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>{language === 'mr' ? '← सर्व पूजा व विधी' : '← All Pujas & Services'}</span>
@@ -110,7 +110,7 @@ export default function ServiceDetailPage() {
 
               <div className="space-y-3">
                 <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-[#FAF7F0] text-[#5A1720] border border-[#B58A3A]/40">
-                  <Sparkles className="w-3.5 h-3.5 text-[#C86B24]" />
+                  <Sparkles className="w-3.5 h-3.5 text-[#944B14]" />
                   <span>{getLocalized(service, 'category_name') || 'धार्मिक विधी'}</span>
                 </div>
 
@@ -119,7 +119,7 @@ export default function ServiceDetailPage() {
                 </h1>
 
                 {service.duration && (
-                  <div className="flex items-center gap-2 text-xs text-[#C86B24] font-medium font-serif">
+                  <div className="flex items-center gap-2 text-xs text-[#944B14] font-semibold font-serif">
                     <Clock className="w-4 h-4" />
                     <span>कालावधी: {service.duration}</span>
                   </div>
@@ -142,7 +142,7 @@ export default function ServiceDetailPage() {
               {service.samagri_summary && (
                 <div className="p-5 rounded-2xl bg-[#FAF7F0]/80 border border-[#B58A3A]/30 space-y-2">
                   <div className="flex items-center gap-2 text-xs font-serif font-bold text-[#5A1720]">
-                    <KalashIcon className="w-4 h-4 text-[#C86B24]" />
+                    <KalashIcon className="w-4 h-4 text-[#944B14]" />
                     <span>साहित्य मार्गदर्शन (Samagri Overview)</span>
                   </div>
                   <p className="text-xs text-[#6F625A] font-serif leading-relaxed">
@@ -247,7 +247,7 @@ export default function ServiceDetailPage() {
                   <span>नागपूर व संपूर्ण विदर्भ क्षेत्रात उपलब्ध</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Calendar className="w-3.5 h-3.5 text-[#C86B24]" />
+                  <Calendar className="w-3.5 h-3.5 text-[#944B14]" />
                   <span>पंचांगानुसार अचूक शुभ मुहूर्त निवड</span>
                 </div>
               </div>

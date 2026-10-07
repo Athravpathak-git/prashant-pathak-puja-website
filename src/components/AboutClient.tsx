@@ -100,11 +100,11 @@ export function AboutClient({ initialProfile }: AboutClientProps) {
 
             {/* Bio Details */}
             <div className="md:col-span-7 space-y-5 text-[#282321] text-xs sm:text-sm leading-relaxed font-serif">
-              <div className="border-l-4 border-l-[#5A1720] pl-4 py-1 space-y-1">
+              <div className="border-l border-[#B58A3A]/60 pl-4 py-1 space-y-1">
                 <h2 className="font-serif font-bold text-xl sm:text-2xl text-[#321116]">
                   {profile?.guruji_title_mr || 'वेदमूर्ती प्रशांत पाठक (गुरुजी)'}
                 </h2>
-                <div className="flex items-center gap-2 text-xs text-[#C86B24] font-medium">
+                <div className="flex items-center gap-2 text-xs text-[#944B14] font-semibold">
                   <MapPin className="w-3.5 h-3.5 text-[#5A1720]" />
                   <span>कर्मभूमी: नागपूर, विदर्भ व सर्वत्र महाराष्ट्र</span>
                 </div>
@@ -185,7 +185,7 @@ export function AboutClient({ initialProfile }: AboutClientProps) {
           </GlassCard>
 
           <GlassCard variant="ivory" padding="p-6" hoverEffect className="space-y-3 border border-[#B58A3A]/40 text-center">
-            <div className="w-12 h-12 rounded-full bg-white border border-[#B58A3A]/40 flex items-center justify-center text-[#C86B24] mx-auto shadow-xs">
+            <div className="w-12 h-12 rounded-full bg-white border border-[#B58A3A]/40 flex items-center justify-center text-[#944B14] mx-auto shadow-xs">
               <Sun className="w-6 h-6" />
             </div>
             <h3 className="font-serif font-bold text-base text-[#321116]">

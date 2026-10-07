@@ -55,9 +55,17 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen flex flex-col bg-ivory-100 text-charcoal-900 antialiased selection:bg-gold-300 selection:text-maroon-900">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:px-4 focus:py-2 focus:bg-[#5A1720] focus:text-[#FAF7F0] focus:rounded-md focus:border focus:border-[#D8B96A] focus:shadow-xl focus:outline-none focus:ring-2 focus:ring-[#D8B96A] font-serif text-xs font-semibold"
+        >
+          मुख्य मजकुरावर जा (Skip to main content)
+        </a>
         <LanguageProvider>
           <Navbar />
-          <main className="flex-1">{children}</main>
+          <main id="main-content" className="flex-1 focus:outline-none" tabIndex={-1}>
+            {children}
+          </main>
           <Footer />
           <FloatingWhatsApp />
         </LanguageProvider>

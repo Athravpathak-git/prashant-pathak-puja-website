@@ -145,11 +145,9 @@
   border-bottom-right-radius: 1rem;
 }
 
-/* Sacred Text & Surface Gradients */
+/* Sacred Text & Surface Styling */
 .gold-gradient-text {
-  background: linear-gradient(135deg, #805E21 0%, #B58A3A 40%, #D8B96A 75%, #9C732B 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #805E21;
 }
 
 .maroon-gradient-bg {
@@ -183,4 +181,17 @@
 a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
   outline: 2px solid #B58A3A;
   outline-offset: 2px;
+}
+
+/* Motion sensitivity accessibility */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

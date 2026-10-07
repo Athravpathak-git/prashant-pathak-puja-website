@@ -97,7 +97,7 @@ export default function VideosPage() {
 
                   <div className="lg:col-span-5 space-y-3">
                     <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-[#FDF2F4] text-[#5A1720] border border-[#A32938]/30">
-                      <Sparkles className="w-3.5 h-3.5 text-[#C86B24]" />
+                      <Sparkles className="w-3.5 h-3.5 text-[#944B14]" />
                       <span>प्रमुख व्हिडीओ</span>
                     </div>
                     <h2 className="font-serif font-bold text-xl sm:text-2xl text-[#321116]">
@@ -130,6 +130,8 @@ export default function VideosPage() {
                         <img
                           src={vid.thumbnail_url}
                           alt={getLocalized(vid, 'title')}
+                          loading="lazy"
+                          decoding="async"
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform"
                         />
                       ) : (
@@ -144,7 +146,7 @@ export default function VideosPage() {
 
                     <div className="p-5 flex-1 flex flex-col justify-between">
                       <div>
-                        <h3 className="font-serif font-bold text-sm text-[#321116] mb-1 group-hover:text-[#C86B24] transition-colors">
+                        <h3 className="font-serif font-bold text-sm text-[#321116] mb-1 group-hover:text-[#944B14] transition-colors">
                           {getLocalized(vid, 'title')}
                         </h3>
                         <p className="text-xs text-[#6F625A] font-serif line-clamp-2 leading-relaxed">

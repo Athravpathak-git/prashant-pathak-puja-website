@@ -179,7 +179,7 @@ export function Footer() {
             <Link
               href="/admin/login"
               aria-label="Admin Portal"
-              className="inline-flex items-center gap-1 text-[11px] text-[#D8B96A]/80 hover:text-[#FAF7F0] transition-colors focus:ring-1 focus:ring-[#D8B96A] px-2 py-0.5 rounded border border-[#B58A3A]/30"
+              className="inline-flex items-center gap-1.5 text-xs text-[#D8B96A] hover:text-[#FAF7F0] transition-colors focus:outline-none focus:ring-2 focus:ring-[#D8B96A] px-3 py-1.5 min-h-[44px] rounded-lg border border-[#B58A3A]/40 bg-[#321116]/60"
             >
               <span>🔒 Admin</span>
             </Link>

@@ -168,7 +168,7 @@ export default function AdminLayout({
                   onClick={() => setSidebarOpen(false)}
                   className={`flex items-center justify-between px-3 py-2 rounded-xl text-xs font-serif font-medium transition-all ${
                     isActive
-                      ? 'bg-gradient-to-r from-maroon-800 to-maroon-900 text-gold-100 font-semibold border-l-4 border-gold-400 shadow-xs'
+                      ? 'bg-gradient-to-r from-maroon-800 to-maroon-900 text-gold-100 font-semibold border border-gold-400/50 shadow-md'
                       : 'text-ivory-300 hover:bg-maroon-900/60 hover:text-white'
                   }`}
                 >

@@ -74,15 +74,15 @@ export default function FaqPage() {
 
               <div className="pt-2 border-t border-[#B58A3A]/25 space-y-3 text-xs text-[#282321] font-serif">
                 <div className="flex items-start gap-2.5">
-                  <span className="text-[#C86B24] font-bold text-sm">✦</span>
+                  <span className="text-[#944B14] font-bold text-sm">✦</span>
                   <span>विधीच्या किमान २ ते ३ दिवस आधी संपर्क साधणे योग्य ठरते.</span>
                 </div>
                 <div className="flex items-start gap-2.5">
-                  <span className="text-[#C86B24] font-bold text-sm">✦</span>
+                  <span className="text-[#944B14] font-bold text-sm">✦</span>
                   <span>पंचांगानुसार अचूक शुभ तिथी व वेळ गुरुजी सुचवतील.</span>
                 </div>
                 <div className="flex items-start gap-2.5">
-                  <span className="text-[#C86B24] font-bold text-sm">✦</span>
+                  <span className="text-[#944B14] font-bold text-sm">✦</span>
                   <span>साहित्याची सविस्तर यादी डिजिटल स्वरूपात पाठवली जाते.</span>
                 </div>
               </div>
@@ -148,11 +148,11 @@ export default function FaqPage() {
                         aria-expanded={isOpen}
                       >
                         <div className="flex items-center gap-3">
-                          <HelpCircle className="w-4 h-4 text-[#C86B24] shrink-0" />
+                          <HelpCircle className="w-4 h-4 text-[#944B14] shrink-0" />
                           <span>{getLocalized(faq, 'question')}</span>
                         </div>
                         <ChevronDown
-                          className={`w-4 h-4 text-[#C86B24] transition-transform duration-200 shrink-0 ${
+                          className={`w-4 h-4 text-[#944B14] transition-transform duration-200 shrink-0 ${
                             isOpen ? 'rotate-180' : ''
                           }`}
                         />

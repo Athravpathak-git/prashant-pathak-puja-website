@@ -94,7 +94,7 @@ export default function AdminLoginPage() {
                 वापरकर्तानाव (Username / Email)
               </label>
               <div className="relative">
-                <User className="w-4 h-4 text-[#B58A3A] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <User className="w-4 h-4 text-[#805E21] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                 <input
                   type="text"
                   required
@@ -112,7 +112,7 @@ export default function AdminLoginPage() {
                 पासवर्ड (Password)
               </label>
               <div className="relative">
-                <Lock className="w-4 h-4 text-[#B58A3A] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <Lock className="w-4 h-4 text-[#805E21] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                 <input
                   type="password"
                   required
@@ -146,7 +146,7 @@ export default function AdminLoginPage() {
           <div className="text-center pt-2 border-t border-[#B58A3A]/20">
             <Link
               href="/"
-              className="inline-flex items-center gap-1.5 text-xs text-[#5A1720] hover:text-[#C86B24] font-medium transition-colors"
+              className="inline-flex items-center gap-1.5 text-xs text-[#5A1720] hover:text-[#944B14] font-medium transition-colors"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               <span>मुख्य संकेतस्थळावर परत जा (Back to Website)</span>

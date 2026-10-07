@@ -107,6 +107,7 @@ export function GlassInput({
   label,
   error,
   icon: Icon,
+  id,
   className = '',
   containerClassName = '',
   ...props
@@ -116,29 +117,35 @@ export function GlassInput({
   icon?: React.ElementType;
   containerClassName?: string;
 }) {
+  const inputId = id || (props.name ? `input-${props.name}` : undefined);
+  const errorId = error && inputId ? `${inputId}-error` : undefined;
+
   return (
     <div className={`space-y-1.5 ${containerClassName}`}>
       {label && (
-        <label className="block text-xs font-semibold text-[#282321]">
+        <label htmlFor={inputId} className="block text-xs font-semibold text-[#282321]">
           {label}
         </label>
       )}
       <div className="relative">
         {Icon && (
-          <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#B58A3A] pointer-events-none">
+          <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#805E21] pointer-events-none" aria-hidden="true">
             <Icon className="w-4 h-4" />
           </div>
         )}
         <input
+          id={inputId}
+          aria-invalid={error ? 'true' : undefined}
+          aria-describedby={errorId}
           {...props}
           className={`w-full ${
             Icon ? 'pl-10' : 'pl-3.5'
-          } pr-3.5 py-2.5 rounded-xl bg-white/75 backdrop-blur-md border border-[#B58A3A]/35 text-xs sm:text-sm text-[#282321] placeholder-[#6F625A]/60 shadow-inner focus:outline-none focus:bg-white focus:border-[#B58A3A] focus:ring-2 focus:ring-[#B58A3A]/20 transition-all ${
+          } pr-3.5 py-2.5 rounded-xl bg-white/75 backdrop-blur-md border border-[#B58A3A]/35 text-xs sm:text-sm text-[#282321] placeholder-[#6F625A]/85 shadow-inner focus:outline-none focus:bg-white focus:border-[#B58A3A] focus:ring-2 focus:ring-[#B58A3A]/20 transition-all ${
             error ? 'border-red-400 focus:ring-red-200' : ''
           } ${className}`}
         />
       </div>
-      {error && <p className="text-[11px] text-red-600 font-medium pl-1">{error}</p>}
+      {error && <p id={errorId} role="alert" className="text-[11px] text-red-600 font-medium pl-1">{error}</p>}
     </div>
   );
 }
@@ -150,6 +157,7 @@ export function GlassSelect({
   label,
   error,
   icon: Icon,
+  id,
   children,
   className = '',
   containerClassName = '',
@@ -160,20 +168,26 @@ export function GlassSelect({
   icon?: React.ElementType;
   containerClassName?: string;
 }) {
+  const selectId = id || (props.name ? `select-${props.name}` : undefined);
+  const errorId = error && selectId ? `${selectId}-error` : undefined;
+
   return (
     <div className={`space-y-1.5 ${containerClassName}`}>
       {label && (
-        <label className="block text-xs font-semibold text-[#282321]">
+        <label htmlFor={selectId} className="block text-xs font-semibold text-[#282321]">
           {label}
         </label>
       )}
       <div className="relative">
         {Icon && (
-          <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#B58A3A] pointer-events-none">
+          <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#805E21] pointer-events-none" aria-hidden="true">
             <Icon className="w-4 h-4" />
           </div>
         )}
         <select
+          id={selectId}
+          aria-invalid={error ? 'true' : undefined}
+          aria-describedby={errorId}
           {...props}
           className={`w-full ${
             Icon ? 'pl-10' : 'pl-3.5'
@@ -184,7 +198,7 @@ export function GlassSelect({
           {children}
         </select>
       </div>
-      {error && <p className="text-[11px] text-red-600 font-medium pl-1">{error}</p>}
+      {error && <p id={errorId} role="alert" className="text-[11px] text-red-600 font-medium pl-1">{error}</p>}
     </div>
   );
 }
@@ -195,6 +209,7 @@ export function GlassSelect({
 export function GlassTextarea({
   label,
   error,
+  id,
   className = '',
   containerClassName = '',
   ...props
@@ -203,20 +218,26 @@ export function GlassTextarea({
   error?: string;
   containerClassName?: string;
 }) {
+  const textareaId = id || (props.name ? `textarea-${props.name}` : undefined);
+  const errorId = error && textareaId ? `${textareaId}-error` : undefined;
+
   return (
     <div className={`space-y-1.5 ${containerClassName}`}>
       {label && (
-        <label className="block text-xs font-semibold text-[#282321]">
+        <label htmlFor={textareaId} className="block text-xs font-semibold text-[#282321]">
           {label}
         </label>
       )}
       <textarea
+        id={textareaId}
+        aria-invalid={error ? 'true' : undefined}
+        aria-describedby={errorId}
         {...props}
-        className={`w-full p-3.5 rounded-xl bg-white/75 backdrop-blur-md border border-[#B58A3A]/35 text-xs sm:text-sm text-[#282321] placeholder-[#6F625A]/60 shadow-inner focus:outline-none focus:bg-white focus:border-[#B58A3A] focus:ring-2 focus:ring-[#B58A3A]/20 transition-all resize-y ${
+        className={`w-full p-3.5 rounded-xl bg-white/75 backdrop-blur-md border border-[#B58A3A]/35 text-xs sm:text-sm text-[#282321] placeholder-[#6F625A]/85 shadow-inner focus:outline-none focus:bg-white focus:border-[#B58A3A] focus:ring-2 focus:ring-[#B58A3A]/20 transition-all resize-y ${
           error ? 'border-red-400 focus:ring-red-200' : ''
         } ${className}`}
       />
-      {error && <p className="text-[11px] text-red-600 font-medium pl-1">{error}</p>}
+      {error && <p id={errorId} role="alert" className="text-[11px] text-red-600 font-medium pl-1">{error}</p>}
     </div>
   );
 }
@@ -238,7 +259,7 @@ export function GlassBadge({
   const variantStyles = {
     gold: 'bg-[#FAF7F0]/90 text-[#805E21] border-[#B58A3A]/45 shadow-[0_2px_8px_rgba(181,138,58,0.12)]',
     maroon: 'bg-[#FDF2F4]/90 text-[#651C24] border-[#F1AAB7]/80 shadow-[0_2px_8px_rgba(101,28,36,0.12)]',
-    saffron: 'bg-[#FFF7EB]/90 text-[#C86B24] border-[#FCC47B]/80 shadow-[0_2px_8px_rgba(200,107,36,0.12)]',
+    saffron: 'bg-[#FFF7EB]/90 text-[#944B14] border-[#FCC47B]/80 shadow-[0_2px_8px_rgba(200,107,36,0.12)]',
     white: 'bg-white/85 text-[#282321] border-[#B58A3A]/30 shadow-xs',
   };
 
@@ -251,7 +272,7 @@ export function GlassBadge({
     <span
       className={`inline-flex items-center gap-1.5 rounded-full font-medium border backdrop-blur-xs select-none ${sizeStyles[size]} ${variantStyles[variant]} ${className}`}
     >
-      <span className="text-[10px] text-[#B58A3A] leading-none">❖</span>
+      <span className="text-[10px] text-[#805E21] leading-none">❖</span>
       <span>{children}</span>
     </span>
   );
@@ -282,7 +303,7 @@ export function GlassStatCard({
           {sublabel && <p className="text-xs text-[#6F625A] pt-0.5">{sublabel}</p>}
         </div>
         {Icon && (
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#FAF7F0] to-white border border-[#B58A3A]/40 flex items-center justify-center text-[#B58A3A] shadow-xs shrink-0">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#FAF7F0] to-white border border-[#B58A3A]/40 flex items-center justify-center text-[#805E21] shadow-xs shrink-0">
             <Icon className="w-5 h-5" />
           </div>
         )}

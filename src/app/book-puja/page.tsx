@@ -188,7 +188,7 @@ function BookPujaForm() {
                 <SacredCorner position="top-left" />
 
                 <div className="border-b border-[#B58A3A]/30 pb-4">
-                  <span className="text-[11px] font-serif uppercase tracking-widest text-[#C86B24] font-semibold block mb-1">
+                  <span className="text-[11px] font-serif uppercase tracking-widest text-[#944B14] font-bold block mb-1">
                     मार्गदर्शन
                   </span>
                   <h3 className="font-serif font-bold text-lg text-[#321116]">
@@ -256,11 +256,11 @@ function BookPujaForm() {
 
                 <div className="pt-4 border-t border-[#B58A3A]/25 space-y-2">
                   <div className="flex items-center gap-2 text-xs text-[#5A1720] font-serif font-medium">
-                    <DiyaIcon className="w-4 h-4 text-[#C86B24]" />
+                    <DiyaIcon className="w-4 h-4 text-[#944B14]" />
                     <span>नागपूर व संपूर्ण विदर्भासाठी थेट सेवा</span>
                   </div>
                   <div className="flex items-center gap-2 text-xs text-[#5A1720] font-serif font-medium">
-                    <KalashIcon className="w-4 h-4 text-[#C86B24]" />
+                    <KalashIcon className="w-4 h-4 text-[#944B14]" />
                     <span>संपूर्ण साहित्य यादी वेळेवर उपलब्ध</span>
                   </div>
                 </div>
@@ -307,7 +307,7 @@ function BookPujaForm() {
                   {/* Step 1: Service Selection */}
                   <div className="space-y-4">
                     <div className="flex items-center gap-2 border-b border-[#B58A3A]/25 pb-2">
-                      <Sparkles className="w-4 h-4 text-[#C86B24]" />
+                      <Sparkles className="w-4 h-4 text-[#944B14]" />
                       <h3 className="font-serif font-bold text-sm sm:text-base text-[#321116]">
                         १. पूजा विधी निवड (Select Ceremony)
                       </h3>
@@ -388,7 +388,7 @@ function BookPujaForm() {
                   {/* Step 3: Date, Time & Location */}
                   <div className="space-y-4">
                     <div className="flex items-center gap-2 border-b border-[#B58A3A]/25 pb-2">
-                      <Calendar className="w-4 h-4 text-[#C86B24]" />
+                      <Calendar className="w-4 h-4 text-[#944B14]" />
                       <h3 className="font-serif font-bold text-sm sm:text-base text-[#321116]">
                         ३. तारीख व ठिकाण (Auspicious Date & Place)
                       </h3>

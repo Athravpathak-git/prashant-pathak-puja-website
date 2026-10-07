@@ -62,7 +62,7 @@ export default function BlogPostDetailPage() {
         <div>
           <Link
             href="/blog"
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#5A1720] hover:text-[#C86B24] transition-colors font-serif"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#5A1720] hover:text-[#944B14] transition-colors font-serif"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>{language === 'mr' ? '← सर्व लेख' : '← All Articles'}</span>
@@ -80,7 +80,7 @@ export default function BlogPostDetailPage() {
             <span className="px-3 py-1 rounded-full bg-[#FAF7F0] text-[#5A1720] font-semibold font-serif border border-[#B58A3A]/30">
               {post.category || 'धार्मिक माहिती'}
             </span>
-            <span className="flex items-center gap-1.5 font-serif text-[#C86B24] font-medium">
+            <span className="flex items-center gap-1.5 font-serif text-[#944B14] font-semibold">
               <Calendar className="w-3.5 h-3.5" />
               {new Date(post.published_at || post.created_at).toLocaleDateString(
                 language === 'mr' ? 'mr-IN' : 'en-US',
@@ -94,7 +94,7 @@ export default function BlogPostDetailPage() {
           </h1>
 
           {post.excerpt_mr && (
-            <div className="p-5 bg-[#FAF7F0]/80 rounded-2xl border-l-4 border-l-[#5A1720] border border-[#B58A3A]/30 text-xs sm:text-sm font-serif italic text-[#282321] leading-relaxed">
+            <div className="p-5 bg-[#FAF7F0]/80 rounded-2xl border border-[#B58A3A]/40 text-xs sm:text-sm font-serif italic text-[#282321] leading-relaxed shadow-xs">
               {getLocalized(post, 'excerpt')}
             </div>
           )}
