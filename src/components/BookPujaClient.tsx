@@ -396,7 +396,7 @@ function BookPujaForm() {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <GlassInput
-                        label={`${t('booking_page.preferred_date')} *`}
+                        label={`${t('booking_page.preferred_date', t('booking_page.date', 'अपेक्षित तारीख'))} *`}
                         name="preferred_date"
                         type="date"
                         required
@@ -406,7 +406,7 @@ function BookPujaForm() {
                       />
 
                       <GlassSelect
-                        label={t('booking_page.preferred_time')}
+                        label={t('booking_page.preferred_time', t('booking_page.time', 'अपेक्षित वेळ'))}
                         name="preferred_time"
                         value={formData.preferred_time}
                         onChange={handleChange}

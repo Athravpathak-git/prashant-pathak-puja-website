@@ -115,7 +115,9 @@
     "success_desc": "Your Booking Reference ID:",
     "success_note": "Prashant Pathak Guruji will contact you soon. You may also follow up directly on WhatsApp.",
     "back_home": "Back to Home",
-    "status_pending": "Pending Verification"
+    "status_pending": "Pending Verification",
+    "preferred_date": "Preferred Date",
+    "preferred_time": "Preferred Time (Morning / Afternoon / Evening)"
   },
   "contact_page": {
     "title": "Contact Us",
