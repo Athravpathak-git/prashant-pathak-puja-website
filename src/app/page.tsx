@@ -1,8 +1,28 @@
+import type { Metadata } from 'next';
 import { query } from '@/lib/db';
 import { HomePageClient } from '@/components/HomePageClient';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
+
+export const metadata: Metadata = {
+  title: {
+    absolute: 'वे.मु. प्रशांत पाठक (गुरुजी) | शास्त्रोक्त धार्मिक विधी व पुरोहित सेवा — नागपूर',
+  },
+  description:
+    'नागपूर येथील सुप्रसिद्ध पुरोहित वेदमूर्ती प्रशांत पाठक गुरुजींद्वारे सर्व प्रकारचे धार्मिक विधी, वास्तुशांती, ग्रहशांती, सत्यनारायण, अभिषेक, विवाह, उपनयन संस्कार व कुंडली मार्गदर्शन शास्त्रोक्त पद्धतीने केले जाते.',
+  alternates: {
+    canonical: 'https://prashant-pathak-puja-website.vercel.app',
+  },
+  openGraph: {
+    title: 'वे.मु. प्रशांत पाठक (गुरुजी) | शास्त्रोक्त धार्मिक विधी — नागपूर',
+    description:
+      'सर्व प्रकारचे धार्मिक विधी शास्त्रोक्त पद्धतीने संपन्न केले जातील. नागपूर, महाराष्ट्र.',
+    url: 'https://prashant-pathak-puja-website.vercel.app',
+    locale: 'mr_IN',
+    type: 'website',
+  },
+};
 
 export default async function HomePage() {
   let profile = null;

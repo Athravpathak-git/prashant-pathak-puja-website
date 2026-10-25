@@ -13,7 +13,11 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: 'वे.मु. प्रशांत पाठक (गुरुजी) | धार्मिक विधी व संस्कार — नागपूर',
+  metadataBase: new URL('https://prashant-pathak-puja-website.vercel.app'),
+  title: {
+    default: 'वे.मु. प्रशांत पाठक (गुरुजी) | धार्मिक विधी व संस्कार — नागपूर',
+    template: '%s | वे.मु. प्रशांत पाठक (गुरुजी)',
+  },
   description: 'नागपूर येथील सुप्रसिद्ध पुरोहित वेदमूर्ती प्रशांत पाठक गुरुजींद्वारे सर्व प्रकारचे धार्मिक विधी, वास्तुशांती, ग्रहशांती, सत्यनारायण, अभिषेक, विवाह, उपनयन संस्कार व कुंडली मार्गदर्शन शास्त्रोक्त पद्धतीने केले जाते.',
   keywords: [
     'प्रशांत पाठक गुरुजी',
@@ -28,9 +32,13 @@ export const metadata: Metadata = {
     'Religious rituals Maharashtra'
   ],
   authors: [{ name: 'वे.मु. प्रशांत पाठक (गुरुजी)' }],
+  alternates: {
+    canonical: 'https://prashant-pathak-puja-website.vercel.app',
+  },
   openGraph: {
     title: 'वे.मु. प्रशांत पाठक (गुरुजी) | वैदिक धार्मिक विधी — नागपूर',
     description: 'सर्व प्रकारचे धार्मिक विधी शास्त्रोक्त पद्धतीने केले जातील. नागपूर, महाराष्ट्र.',
+    url: 'https://prashant-pathak-puja-website.vercel.app',
     locale: 'mr_IN',
     type: 'website',
   },

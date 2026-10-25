@@ -100,6 +100,16 @@ export function Footer() {
                   <span>›</span> {t('nav.contact')}
                 </Link>
               </li>
+              <li className="pt-1 border-t border-[#B58A3A]/20">
+                <Link href="/privacy-policy" className="hover:text-[#D8B96A] transition-colors flex items-center gap-1 text-[11px] text-[#FAF7F0]/70">
+                  <span>›</span> गोपनीयता धोरण (Privacy)
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms-and-conditions" className="hover:text-[#D8B96A] transition-colors flex items-center gap-1 text-[11px] text-[#FAF7F0]/70">
+                  <span>›</span> नियम व अटी (Terms)
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -111,32 +121,32 @@ export function Footer() {
             </h4>
             <ul className="space-y-2 text-xs text-[#FAF7F0]/80">
               <li>
-                <Link href="/services" className="hover:text-[#D8B96A] transition-colors flex items-center gap-1">
+                <Link href="/services/vastu-shanti" className="hover:text-[#D8B96A] transition-colors flex items-center gap-1">
                   <span>›</span> वास्तुशांती (Vastu Shanti)
                 </Link>
               </li>
               <li>
-                <Link href="/services" className="hover:text-[#D8B96A] transition-colors flex items-center gap-1">
+                <Link href="/services/satyanarayan-puja" className="hover:text-[#D8B96A] transition-colors flex items-center gap-1">
                   <span>›</span> सत्यनारायण महापूजा (Satyanarayan)
                 </Link>
               </li>
               <li>
-                <Link href="/services" className="hover:text-[#D8B96A] transition-colors flex items-center gap-1">
+                <Link href="/services/rudra-abhishek" className="hover:text-[#D8B96A] transition-colors flex items-center gap-1">
                   <span>›</span> महारुद्र / लघुरुद्र अभिषेक (Rudra)
                 </Link>
               </li>
               <li>
-                <Link href="/services" className="hover:text-[#D8B96A] transition-colors flex items-center gap-1">
+                <Link href="/services/grah-shanti" className="hover:text-[#D8B96A] transition-colors flex items-center gap-1">
                   <span>›</span> नवग्रह शांती विधी (Navgrah Shanti)
                 </Link>
               </li>
               <li>
-                <Link href="/services" className="hover:text-[#D8B96A] transition-colors flex items-center gap-1">
+                <Link href="/services/vivah-sanskar" className="hover:text-[#D8B96A] transition-colors flex items-center gap-1">
                   <span>›</span> उपनयन संस्कार व विवाह विधी (Vivah)
                 </Link>
               </li>
               <li>
-                <Link href="/services" className="hover:text-[#D8B96A] transition-colors flex items-center gap-1">
+                <Link href="/services/kalsarp-shanti" className="hover:text-[#D8B96A] transition-colors flex items-center gap-1">
                   <span>›</span> कालसर्प व नारायण नागबली
                 </Link>
               </li>
@@ -172,21 +182,41 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Bottom Bar with Accessible 🔒 Admin link */}
-        <div className="mt-12 pt-6 border-t border-[#B58A3A]/25 flex flex-col sm:flex-row items-center justify-between text-xs text-[#D8B96A]/80 gap-3">
-          <p>{t('footer.copyright')}</p>
-          <div className="flex items-center gap-4">
-            <Link
-              href="/admin/login"
-              aria-label="Admin Portal"
-              className="inline-flex items-center gap-1.5 text-xs text-[#D8B96A] hover:text-[#FAF7F0] transition-colors focus:outline-none focus:ring-2 focus:ring-[#D8B96A] px-3 py-1.5 min-h-[44px] rounded-lg border border-[#B58A3A]/40 bg-[#321116]/60"
-            >
-              <span>🔒 Admin</span>
+        {/* Bottom Bar with Accessible Legal & 🔒 Admin links */}
+        <div className="mt-12 pt-6 border-t border-[#B58A3A]/25 space-y-4">
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] text-[#FAF7F0]/70">
+            <Link href="/privacy-policy" className="hover:text-[#D8B96A] transition-colors">
+              गोपनीयता धोरण (Privacy Policy)
             </Link>
-            <p className="flex items-center gap-2">
-              <span>{t('footer.credits')}</span>
-              <span className="text-[#D8B96A] font-serif font-bold">॥ शुभं भवतु ॥</span>
-            </p>
+            <span className="text-[#B58A3A]/40">•</span>
+            <Link href="/terms-and-conditions" className="hover:text-[#D8B96A] transition-colors">
+              नियम व अटी (Terms & Conditions)
+            </Link>
+            <span className="text-[#B58A3A]/40">•</span>
+            <Link href="/about" className="hover:text-[#D8B96A] transition-colors">
+              परिचय (About Guruji)
+            </Link>
+            <span className="text-[#B58A3A]/40">•</span>
+            <Link href="/contact" className="hover:text-[#D8B96A] transition-colors">
+              संपर्क (Contact)
+            </Link>
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-center justify-between text-xs text-[#D8B96A]/80 gap-3 pt-2">
+            <p>{t('footer.copyright')}</p>
+            <div className="flex items-center gap-4">
+              <Link
+                href="/admin/login"
+                aria-label="Admin Portal"
+                className="inline-flex items-center gap-1.5 text-xs text-[#D8B96A] hover:text-[#FAF7F0] transition-colors focus:outline-none focus:ring-2 focus:ring-[#D8B96A] px-3 py-1.5 min-h-[44px] rounded-lg border border-[#B58A3A]/40 bg-[#321116]/60"
+              >
+                <span>🔒 Admin</span>
+              </Link>
+              <p className="flex items-center gap-2">
+                <span>{t('footer.credits')}</span>
+                <span className="text-[#D8B96A] font-serif font-bold">॥ शुभं भवतु ॥</span>
+              </p>
+            </div>
           </div>
         </div>
       </div>
