@@ -161,7 +161,9 @@ export function Footer() {
             </h4>
             <div className="space-y-3 text-xs">
               <div className="bg-[#5A1720]/40 p-3.5 rounded-2xl border border-[#B58A3A]/30 shadow-md">
-                <span className="block text-[#D8B96A] font-medium mb-1.5 text-xs">अधिकृत WhatsApp संपर्क:</span>
+                <span className="block text-[#D8B96A] font-medium mb-1.5 text-xs">
+                  {language === 'mr' ? 'अधिकृत WhatsApp थेट संपर्क:' : 'Official WhatsApp Direct Chat:'}
+                </span>
                 <a
                   href="/api/whatsapp"
                   target="_blank"
@@ -169,7 +171,7 @@ export function Footer() {
                   className="inline-flex items-center gap-2 text-green-400 font-bold hover:text-green-300 transition-colors"
                 >
                   <MessageSquare className="w-4 h-4" />
-                  <span>@PrashantPathakGuruji</span>
+                  <span>{language === 'mr' ? 'थेट चॅट सुरू करा' : 'Start Direct Chat'}</span>
                 </a>
               </div>
 

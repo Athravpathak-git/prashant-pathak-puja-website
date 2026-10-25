@@ -35,11 +35,14 @@ export async function PUT(req: NextRequest) {
   try {
     const body = await req.json();
 
-    const contact_location_mr = sanitizeString(body.contact_location_mr || 'नागपूर, महाराष्ट्र');
-    const contact_location_en = sanitizeString(body.contact_location_en || 'Nagpur, Maharashtra');
-    const whatsapp_username = sanitizeString(body.whatsapp_username || '@PrashantPathakGuruji');
-    const logo_url = sanitizeString(body.logo_url || '');
-    const favicon_url = sanitizeString(body.favicon_url || '');
+    const currentRes = await query('SELECT * FROM website_settings WHERE id = 1');
+    const currentRow = currentRes.rows[0] || {};
+
+    const contact_location_mr = sanitizeString(body.contact_location_mr || currentRow.contact_location_mr || 'नागपूर, महाराष्ट्र');
+    const contact_location_en = sanitizeString(body.contact_location_en || currentRow.contact_location_en || 'Nagpur, Maharashtra');
+    const whatsapp_username = body.whatsapp_username ? sanitizeString(body.whatsapp_username) : (currentRow.whatsapp_username || '');
+    const logo_url = body.logo_url !== undefined ? sanitizeString(body.logo_url) : (currentRow.logo_url || '');
+    const favicon_url = body.favicon_url !== undefined ? sanitizeString(body.favicon_url) : (currentRow.favicon_url || '');
     const guruji_name_mr = body.guruji_name_mr ? sanitizeString(body.guruji_name_mr) : undefined;
     const guruji_name_en = body.guruji_name_en ? sanitizeString(body.guruji_name_en) : undefined;
 

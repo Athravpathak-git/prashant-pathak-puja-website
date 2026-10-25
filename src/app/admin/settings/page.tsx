@@ -12,19 +12,31 @@ import {
   MessageCircle,
   Image as ImageIcon,
   UploadCloud,
-  Info
+  Info,
+  Phone,
+  AtSign,
+  Lock
 } from 'lucide-react';
 
 export default function AdminSettingsPage() {
   const [formData, setFormData] = useState({
     guruji_name_mr: '',
     guruji_name_en: '',
-    whatsapp_username: '',
     contact_location_mr: '',
     contact_location_en: '',
     logo_url: '',
     favicon_url: '',
   });
+
+  // Dedicated WhatsApp Settings state
+  const [waData, setWaData] = useState({
+    contact_type: 'mobile' as 'mobile' | 'username',
+    country_code: '91',
+    contact_value: '',
+    is_enabled: true,
+  });
+  const [waSaving, setWaSaving] = useState(false);
+  const [waMsg, setWaMsg] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -32,18 +44,27 @@ export default function AdminSettingsPage() {
   const [statusMsg, setStatusMsg] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   useEffect(() => {
-    fetch('/api/settings')
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.settings) {
+    Promise.all([
+      fetch('/api/settings').then((r) => r.json()),
+      fetch('/api/settings/whatsapp').then((r) => r.json()),
+    ])
+      .then(([generalData, waSettings]) => {
+        if (generalData.settings) {
           setFormData({
-            guruji_name_mr: data.settings.guruji_name_mr || 'वे.मु. प्रशांत पाठक (गुरुजी)',
-            guruji_name_en: data.settings.guruji_name_en || 'Ve.Mu. Prashant Pathak (Guruji)',
-            whatsapp_username: data.settings.whatsapp_username || '@PrashantPathakGuruji',
-            contact_location_mr: data.settings.contact_location_mr || 'नागपूर, महाराष्ट्र',
-            contact_location_en: data.settings.contact_location_en || 'Nagpur, Maharashtra',
-            logo_url: data.settings.logo_url || '',
-            favicon_url: data.settings.favicon_url || '',
+            guruji_name_mr: generalData.settings.guruji_name_mr || 'वे.मु. प्रशांत पाठक (गुरुजी)',
+            guruji_name_en: generalData.settings.guruji_name_en || 'Ve.Mu. Prashant Pathak (Guruji)',
+            contact_location_mr: generalData.settings.contact_location_mr || 'नागपूर, महाराष्ट्र',
+            contact_location_en: generalData.settings.contact_location_en || 'Nagpur, Maharashtra',
+            logo_url: generalData.settings.logo_url || '',
+            favicon_url: generalData.settings.favicon_url || '',
+          });
+        }
+        if (waSettings && !waSettings.error) {
+          setWaData({
+            contact_type: waSettings.contact_type || 'mobile',
+            country_code: waSettings.country_code || '91',
+            contact_value: waSettings.contact_value || '',
+            is_enabled: waSettings.is_enabled !== false,
           });
         }
       })
@@ -91,6 +112,7 @@ export default function AdminSettingsPage() {
     }
   };
 
+  // Save General Settings
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);
@@ -105,7 +127,7 @@ export default function AdminSettingsPage() {
 
       const data = await res.json();
       if (res.ok) {
-        setStatusMsg({ type: 'success', text: 'सेटिंग्ज यशस्वीरित्या सेव्ह केल्या.' });
+        setStatusMsg({ type: 'success', text: 'संकेतस्थळ सेटिंग्ज यशस्वीरित्या सेव्ह केल्या.' });
       } else {
         setStatusMsg({ type: 'error', text: data.error || 'त्रुटी आली.' });
       }
@@ -113,6 +135,38 @@ export default function AdminSettingsPage() {
       setStatusMsg({ type: 'error', text: 'सर्व्हरशी संपर्क साधताना त्रुटी आली.' });
     } finally {
       setSaving(false);
+    }
+  };
+
+  // Save WhatsApp Direct Chat Settings
+  const handleSaveWhatsApp = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setWaSaving(true);
+    setWaMsg(null);
+
+    try {
+      const res = await fetch('/api/settings/whatsapp', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(waData),
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        setWaMsg({
+          type: 'success',
+          text: data.message || 'व्हॉट्सॲप थेट चॅट सेटिंग्ज सुरक्षितपणे जतन केल्या.',
+        });
+      } else {
+        setWaMsg({
+          type: 'error',
+          text: data.error || 'व्हॉट्सॲप सेटिंग्ज जतन करताना त्रुटी आली.',
+        });
+      }
+    } catch {
+      setWaMsg({ type: 'error', text: 'सर्व्हरशी संपर्क साधताना त्रुटी आली.' });
+    } finally {
+      setWaSaving(false);
     }
   };
 
@@ -137,7 +191,7 @@ export default function AdminSettingsPage() {
               संकेतस्थळ सेटिंग्ज (Website Settings)
             </h1>
             <p className="text-xs text-charcoal-600">
-              संपर्क माहिती, सार्वजनिक हँडल आणि अधिकृत ब्रँडिंग व्यवस्थापन
+              अधिकृत ब्रँडिंग, स्थान व सुरक्षित व्हॉट्सॲप थेट चॅट व्यवस्थापन
             </p>
           </div>
         </div>
@@ -156,18 +210,183 @@ export default function AdminSettingsPage() {
         </div>
       )}
 
-      {/* Privacy Notice Banner */}
-      <div className="bg-gradient-to-r from-maroon-900 to-maroon-950 text-gold-100 p-5 rounded-2xl shadow-sm border border-gold-500/30 flex items-start gap-3.5">
-        <Shield className="w-6 h-6 text-gold-400 shrink-0 mt-0.5" />
-        <div className="text-xs space-y-1">
-          <p className="font-bold text-gold-300 font-serif text-sm">
-            गोपनीयता व सुरक्षा सूचना (Client Privacy Policy)
-          </p>
-          <p className="text-ivory-200 leading-relaxed">
-            गुरुजींचा वैयक्तिक मोबाईल नंबर वेबसाइटवरील कोणत्याही सार्वजनिक पानावर किंवा क्लायंट कोडमध्ये उघड केला जात नाही. 
-            सार्वजनिक संपर्क फक्त अधिकृत व्हॉट्सॲप युझरनेम <strong>@PrashantPathakGuruji</strong> द्वारे सुरक्षित सर्व्हर-साइड पुनर्निर्देशनाद्वारे होतो.
-          </p>
+      {/* WhatsApp Settings Section (Dedicated Card) */}
+      <div className="bg-white p-6 rounded-2xl shadow-sm border border-gold-500/20 space-y-5">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-gold-100 pb-3 gap-2">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-200">
+              <MessageCircle className="w-4 h-4" />
+            </div>
+            <div>
+              <h2 className="text-base font-serif font-bold text-maroon-900">
+                WhatsApp Settings (व्हॉट्सॲप थेट चॅट सेटिंग्ज)
+              </h2>
+              <p className="text-[11px] text-charcoal-500">
+                वेबसाइटवरील सर्व व्हॉट्सॲप आयकॉन्ससाठी थेट संवादाची सुरक्षित लिंक
+              </p>
+            </div>
+          </div>
+
+          {/* Simple Enabled / Disabled Toggle */}
+          <label className="flex items-center gap-2 cursor-pointer bg-ivory-50 px-3 py-1.5 rounded-xl border border-gold-200 text-xs font-semibold">
+            <input
+              type="checkbox"
+              checked={waData.is_enabled}
+              onChange={(e) => setWaData((prev) => ({ ...prev, is_enabled: e.target.checked }))}
+              className="w-4 h-4 accent-emerald-600 rounded cursor-pointer"
+            />
+            <span className={waData.is_enabled ? 'text-emerald-700' : 'text-charcoal-400'}>
+              {waData.is_enabled ? 'सक्रिय (Enabled)' : 'अक्षम (Disabled)'}
+            </span>
+          </label>
         </div>
+
+        {waMsg && (
+          <div
+            className={`p-3.5 rounded-xl text-xs flex items-center gap-2 ${
+              waMsg.type === 'success'
+                ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
+                : 'bg-red-50 text-red-800 border border-red-200'
+            }`}
+          >
+            {waMsg.type === 'success' ? <Check className="w-4 h-4 shrink-0" /> : <AlertCircle className="w-4 h-4 shrink-0" />}
+            <span>{waMsg.text}</span>
+          </div>
+        )}
+
+        <form onSubmit={handleSaveWhatsApp} className="space-y-4 text-xs sm:text-sm">
+          {/* 1. Contact Type */}
+          <div>
+            <label className="block text-xs font-semibold text-charcoal-700 mb-2">
+              संपर्क प्रकार (Contact Type) *
+            </label>
+            <div className="flex flex-wrap gap-4">
+              <label
+                className={`flex items-center gap-2 cursor-pointer p-3 rounded-xl border transition ${
+                  waData.contact_type === 'mobile'
+                    ? 'border-emerald-600 bg-emerald-50/50 shadow-xs ring-1 ring-emerald-600'
+                    : 'border-gold-200 bg-ivory-50 hover:bg-gold-50/50'
+                }`}
+              >
+                <input
+                  type="radio"
+                  name="contact_type"
+                  value="mobile"
+                  checked={waData.contact_type === 'mobile'}
+                  onChange={() => setWaData((prev) => ({ ...prev, contact_type: 'mobile' }))}
+                  className="accent-emerald-700 w-4 h-4"
+                />
+                <Phone className="w-3.5 h-3.5 text-emerald-700" />
+                <span className="text-xs font-semibold text-maroon-950">मोबाईल नंबर (Mobile Number)</span>
+              </label>
+
+              <label
+                className={`flex items-center gap-2 cursor-pointer p-3 rounded-xl border transition ${
+                  waData.contact_type === 'username'
+                    ? 'border-emerald-600 bg-emerald-50/50 shadow-xs ring-1 ring-emerald-600'
+                    : 'border-gold-200 bg-ivory-50 hover:bg-gold-50/50'
+                }`}
+              >
+                <input
+                  type="radio"
+                  name="contact_type"
+                  value="username"
+                  checked={waData.contact_type === 'username'}
+                  onChange={() => setWaData((prev) => ({ ...prev, contact_type: 'username' }))}
+                  className="accent-emerald-700 w-4 h-4"
+                />
+                <AtSign className="w-3.5 h-3.5 text-emerald-700" />
+                <span className="text-xs font-semibold text-maroon-950">व्हॉट्सॲप युझरनेम (WhatsApp Username)</span>
+              </label>
+            </div>
+          </div>
+
+          {/* 2. Contact Value */}
+          {waData.contact_type === 'mobile' ? (
+            <div className="space-y-1.5">
+              <label className="block text-xs font-semibold text-charcoal-700">
+                कंट्री कोड व मोबाईल क्रमांक (Country Code & Mobile Number) *
+              </label>
+              <div className="flex gap-2.5">
+                <div className="w-24 shrink-0">
+                  <div className="relative">
+                    <span className="absolute inset-y-0 left-0 pl-2.5 flex items-center text-charcoal-400 font-mono text-xs">+</span>
+                    <input
+                      type="text"
+                      value={waData.country_code}
+                      onChange={(e) =>
+                        setWaData((prev) => ({
+                          ...prev,
+                          country_code: e.target.value.replace(/[^0-9]/g, ''),
+                        }))
+                      }
+                      placeholder="91"
+                      maxLength={4}
+                      required
+                      className="w-full pl-6 pr-2 py-2 rounded-xl border border-gold-300 font-mono text-center focus:outline-none focus:ring-2 focus:ring-emerald-600 bg-ivory-50/50 text-xs sm:text-sm"
+                      title="कंट्री कोड (उदा. 91)"
+                    />
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <input
+                    type="tel"
+                    value={waData.contact_value}
+                    onChange={(e) => setWaData((prev) => ({ ...prev, contact_value: e.target.value }))}
+                    placeholder="उदा. 9822123456 (१० अंकी मोबाईल क्रमांक)"
+                    required
+                    className="w-full px-3.5 py-2 rounded-xl border border-gold-300 font-mono focus:outline-none focus:ring-2 focus:ring-emerald-600 bg-ivory-50/50 text-xs sm:text-sm"
+                  />
+                </div>
+              </div>
+              <p className="text-[11px] text-charcoal-500">
+                केवळ आकडे प्रविष्ट करा (+, स्पेस किंवा डॅश देऊ नका). अधिकृत थेट चॅट https://wa.me/91XXXXXXXXXX द्वारे थेट उघडेल.
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-1.5">
+              <label className="block text-xs font-semibold text-charcoal-700">
+                व्हॉट्सॲप युझरनेम (WhatsApp Username) *
+              </label>
+              <div className="relative">
+                <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-charcoal-400 font-mono font-bold">@</span>
+                <input
+                  type="text"
+                  value={waData.contact_value.replace(/^@+/, '')}
+                  onChange={(e) =>
+                    setWaData((prev) => ({ ...prev, contact_value: e.target.value.replace(/^@+/, '') }))
+                  }
+                  placeholder="उदा. PrashantPathakGuruji"
+                  required
+                  className="w-full pl-8 pr-3 py-2 rounded-xl border border-gold-300 font-mono focus:outline-none focus:ring-2 focus:ring-emerald-600 bg-ivory-50/50 text-xs sm:text-sm"
+                />
+              </div>
+              <p className="text-[11px] text-charcoal-500">
+                नोंद: थेट व खात्रीशीर संवादासाठी 'मोबाईल नंबर' पर्याय सर्वात विश्वसनीय व सर्व उपकरणांवर त्वरित कार्य करतो.
+              </p>
+            </div>
+          )}
+
+          {/* Encryption Guarantee Notice */}
+          <div className="p-3 bg-emerald-50/50 rounded-xl border border-emerald-200 text-[11px] text-emerald-950 flex items-start gap-2.5">
+            <Lock className="w-4 h-4 text-emerald-700 shrink-0 mt-0.5" />
+            <span className="leading-relaxed">
+              <strong>सुरक्षा हमी:</strong> हा संपर्क तपशील डेटाबेसमध्ये आधुनिक <strong>AES-256-GCM</strong> तंत्रज्ञानाद्वारे कूटबद्ध (Encrypted at rest) ठेवला जातो. सार्वजनिक वेबसाइटवर, HTML कोडमध्ये किंवा API प्रतिसादांमध्ये मोबाईल नंबर अथवा युझरनेम कधीही उघड केला जात नाही.
+            </span>
+          </div>
+
+          {/* Save Button for WhatsApp Settings */}
+          <div className="flex justify-end pt-1">
+            <button
+              type="submit"
+              disabled={waSaving}
+              className="px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 disabled:opacity-50 text-white rounded-xl text-xs font-bold shadow flex items-center gap-2 transition"
+            >
+              <Save className="w-4 h-4" />
+              <span>{waSaving ? 'जतन करत आहे...' : 'व्हॉट्सॲप सेव्ह करा (Save WhatsApp Settings)'}</span>
+            </button>
+          </div>
+        </form>
       </div>
 
       {/* Main Settings Form */}
@@ -194,7 +413,7 @@ export default function AdminSettingsPage() {
         {/* Public Contact & Location */}
         <div className="bg-white p-6 rounded-2xl shadow-sm border border-gold-500/20 space-y-4">
           <h2 className="text-base font-serif font-bold text-maroon-900 border-b border-gold-100 pb-2 flex items-center gap-2">
-            <span className="text-saffron-600 font-bold">२.</span> अधिकृत संपर्क व स्थान (Contact & Location)
+            <span className="text-saffron-600 font-bold">२.</span> अधिकृत स्थान (Location & Region)
           </h2>
 
           <TranslatePairInput
@@ -208,25 +427,6 @@ export default function AdminSettingsPage() {
             placeholderEn="e.g. Nagpur, Maharashtra"
             required
           />
-
-          <div>
-            <label className="block text-xs font-semibold text-charcoal-700 mb-1 flex items-center gap-1.5">
-              <MessageCircle className="w-3.5 h-3.5 text-emerald-600" />
-              सार्वजनिक व्हॉट्सॲप युझरनेम (Public WhatsApp Username) *
-            </label>
-            <input
-              type="text"
-              name="whatsapp_username"
-              value={formData.whatsapp_username}
-              onChange={handleChange}
-              required
-              className="w-full px-3.5 py-2.5 rounded-xl border border-gold-300 focus:outline-none focus:ring-2 focus:ring-saffron-500 text-sm bg-ivory-50/50 font-mono"
-            />
-            <p className="text-[11px] text-charcoal-500 mt-1 flex items-center gap-1">
-              <Info className="w-3 h-3 text-gold-600 shrink-0" />
-              सार्वजनिक युझर्सना फक्त हे युझरनेम दिसेल (उदा. @PrashantPathakGuruji).
-            </p>
-          </div>
         </div>
 
         {/* Media Branding: Logo and Favicon */}
@@ -306,7 +506,7 @@ export default function AdminSettingsPage() {
           </div>
         </div>
 
-        {/* Submit Button */}
+        {/* Submit Button for General Settings */}
         <div className="flex justify-end">
           <button
             type="submit"
@@ -314,7 +514,7 @@ export default function AdminSettingsPage() {
             className="px-6 py-3 rounded-xl bg-saffron-600 hover:bg-saffron-700 text-white font-semibold text-sm flex items-center gap-2 shadow-md transition disabled:opacity-50"
           >
             <Save className="w-4 h-4" />
-            {saving ? 'जतन करत आहे...' : 'सेटिंग्ज सेव्ह करा (Save Settings)'}
+            {saving ? 'जतन करत आहे...' : 'संकेतस्थळ सेटिंग्ज सेव्ह करा (Save General Settings)'}
           </button>
         </div>
       </form>

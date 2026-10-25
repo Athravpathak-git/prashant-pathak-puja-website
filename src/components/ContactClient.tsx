@@ -163,7 +163,15 @@ export function ContactClient() {
                     <span className="font-bold block text-[#321116]">
                       {t('contact_page.whatsapp_label', 'अधिकृत WhatsApp:')}
                     </span>
-                    <span className="font-bold text-emerald-700 font-mono">@PrashantPathakGuruji</span>
+                    <a
+                      href="/api/whatsapp"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-bold text-emerald-700 hover:text-emerald-800 hover:underline inline-flex items-center gap-1"
+                    >
+                      {language === 'mr' ? 'थेट चॅट सुरू करा' : 'Start Direct Chat'}
+                      <span aria-hidden="true">→</span>
+                    </a>
                   </div>
                 </div>
 
