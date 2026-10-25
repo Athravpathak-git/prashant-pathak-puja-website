@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { BookOpen, PlusCircle, Edit2, Trash2, X, Calendar } from 'lucide-react';
+import { TranslatePairInput, TranslatePairTextarea } from '@/components/admin/AutoTranslate';
 
 export default function AdminBlogPage() {
   const [posts, setPosts] = useState<any[]>([]);
@@ -187,27 +188,17 @@ export default function AdminBlogPage() {
             </div>
 
             <form onSubmit={handleSave} className="space-y-4 text-xs sm:text-sm">
-              <div>
-                <label className="block text-xs font-semibold mb-1">मराठी शीर्षक *</label>
-                <input
-                  type="text"
-                  required
-                  value={form.title_mr}
-                  onChange={(e) => setForm({ ...form, title_mr: e.target.value })}
-                  className="w-full px-3 py-2 bg-ivory-50 border border-gold-300 rounded-lg focus:outline-none"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-semibold mb-1">English Title *</label>
-                <input
-                  type="text"
-                  required
-                  value={form.title_en}
-                  onChange={(e) => setForm({ ...form, title_en: e.target.value })}
-                  className="w-full px-3 py-2 bg-ivory-50 border border-gold-300 rounded-lg focus:outline-none"
-                />
-              </div>
+              <TranslatePairInput
+                labelMr="मराठी शीर्षक *"
+                labelEn="English Title *"
+                valueMr={form.title_mr}
+                valueEn={form.title_en}
+                onChangeMr={(val) => setForm((prev) => ({ ...prev, title_mr: val }))}
+                onChangeEn={(val) => setForm((prev) => ({ ...prev, title_en: val }))}
+                placeholderMr="उदा. वास्तुशांतीचे महत्त्व व लाभ"
+                placeholderEn="e.g. Importance & Benefits of Vastu Shanti"
+                required
+              />
 
               <div>
                 <label className="block text-xs font-semibold mb-1">वर्गवारी (Category)</label>
@@ -220,26 +211,30 @@ export default function AdminBlogPage() {
                 />
               </div>
 
-              <div>
-                <label className="block text-xs font-semibold mb-1">संक्षिप्त माहिती (Excerpt in Marathi)</label>
-                <textarea
-                  rows={2}
-                  value={form.excerpt_mr}
-                  onChange={(e) => setForm({ ...form, excerpt_mr: e.target.value })}
-                  className="w-full px-3 py-2 bg-ivory-50 border border-gold-300 rounded-lg focus:outline-none"
-                />
-              </div>
+              <TranslatePairTextarea
+                labelMr="संक्षिप्त माहिती (Excerpt in Marathi)"
+                labelEn="Article Summary (Excerpt in English)"
+                valueMr={form.excerpt_mr}
+                valueEn={form.excerpt_en}
+                onChangeMr={(val) => setForm((prev) => ({ ...prev, excerpt_mr: val }))}
+                onChangeEn={(val) => setForm((prev) => ({ ...prev, excerpt_en: val }))}
+                rows={2}
+                placeholderMr="लेखाचा २-३ ओळींत सारांश..."
+                placeholderEn="Brief 2-3 line summary of the article..."
+              />
 
-              <div>
-                <label className="block text-xs font-semibold mb-1">संपूर्ण लेख मजकूर (Full Content in Marathi) *</label>
-                <textarea
-                  rows={6}
-                  required
-                  value={form.content_mr}
-                  onChange={(e) => setForm({ ...form, content_mr: e.target.value })}
-                  className="w-full px-3 py-2 bg-ivory-50 border border-gold-300 rounded-lg focus:outline-none"
-                />
-              </div>
+              <TranslatePairTextarea
+                labelMr="संपूर्ण लेख मजकूर (Full Content in Marathi) *"
+                labelEn="Full Article Content (English) *"
+                valueMr={form.content_mr}
+                valueEn={form.content_en}
+                onChangeMr={(val) => setForm((prev) => ({ ...prev, content_mr: val }))}
+                onChangeEn={(val) => setForm((prev) => ({ ...prev, content_en: val }))}
+                rows={6}
+                required
+                placeholderMr="सविस्तर लेख, शास्त्रीय संदर्भ व महत्त्व..."
+                placeholderEn="Detailed article, scriptural references and significance..."
+              />
 
               <div className="pt-3 border-t border-gold-200 flex justify-end gap-2">
                 <button

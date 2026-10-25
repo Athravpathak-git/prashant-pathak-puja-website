@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { ImageCropModal } from '@/components/ImageCropModal';
+import { TranslatePairInput, TranslatePairTextarea } from '@/components/admin/AutoTranslate';
 import {
   User,
   Upload,
@@ -336,86 +337,42 @@ export default function AdminProfilePage() {
           तपशीलवार माहिती (Details in Marathi & English)
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <div>
-            <label className="block text-xs font-semibold text-maroon-950 mb-1">
-              गुरुजींचे नाव (मराठी) *
-            </label>
-            <input
-              type="text"
-              required
-              value={profile.guruji_name_mr}
-              onChange={(e) => setProfile({ ...profile, guruji_name_mr: e.target.value })}
-              className="w-full px-3.5 py-2 bg-ivory-50 border border-gold-300 rounded-lg text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-maroon-800"
-            />
-          </div>
+        <TranslatePairInput
+          labelMr="गुरुजींचे नाव (मराठी) *"
+          labelEn="Guruji's Name (English) *"
+          valueMr={profile.guruji_name_mr}
+          valueEn={profile.guruji_name_en}
+          onChangeMr={(val) => setProfile((prev: any) => ({ ...prev, guruji_name_mr: val }))}
+          onChangeEn={(val) => setProfile((prev: any) => ({ ...prev, guruji_name_en: val }))}
+          placeholderMr="उदा. वे.मु. प्रशांत पाठक (गुरुजी)"
+          placeholderEn="e.g. Ve.Mu. Prashant Pathak (Guruji)"
+          required
+        />
 
-          <div>
-            <label className="block text-xs font-semibold text-maroon-950 mb-1">
-              Guruji's Name (English) *
-            </label>
-            <input
-              type="text"
-              required
-              value={profile.guruji_name_en}
-              onChange={(e) => setProfile({ ...profile, guruji_name_en: e.target.value })}
-              className="w-full px-3.5 py-2 bg-ivory-50 border border-gold-300 rounded-lg text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-maroon-800"
-            />
-          </div>
-
-          <div>
-            <label className="block text-xs font-semibold text-maroon-950 mb-1">
-              पदवी / शीर्षक (मराठी)
-            </label>
-            <input
-              type="text"
-              value={profile.guruji_title_mr}
-              onChange={(e) => setProfile({ ...profile, guruji_title_mr: e.target.value })}
-              className="w-full px-3.5 py-2 bg-ivory-50 border border-gold-300 rounded-lg text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-maroon-800"
-            />
-          </div>
-
-          <div>
-            <label className="block text-xs font-semibold text-maroon-950 mb-1">
-              Title / Honorific (English)
-            </label>
-            <input
-              type="text"
-              value={profile.guruji_title_en}
-              onChange={(e) => setProfile({ ...profile, guruji_title_en: e.target.value })}
-              className="w-full px-3.5 py-2 bg-ivory-50 border border-gold-300 rounded-lg text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-maroon-800"
-            />
-          </div>
-        </div>
+        <TranslatePairInput
+          labelMr="पदवी / शीर्षक (मराठी)"
+          labelEn="Title / Honorific (English)"
+          valueMr={profile.guruji_title_mr}
+          valueEn={profile.guruji_title_en}
+          onChangeMr={(val) => setProfile((prev: any) => ({ ...prev, guruji_title_mr: val }))}
+          onChangeEn={(val) => setProfile((prev: any) => ({ ...prev, guruji_title_en: val }))}
+          placeholderMr="उदा. वेदशास्त्रसंपन्न वैदिक पुरोहित"
+          placeholderEn="e.g. Vedic Purohit & Ritual Specialist"
+        />
 
         {/* Bio */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <div>
-            <label className="block text-xs font-semibold text-maroon-950 mb-1">
-              परिचय / माहिती (मराठी) *
-            </label>
-            <textarea
-              rows={5}
-              required
-              value={profile.bio_mr}
-              onChange={(e) => setProfile({ ...profile, bio_mr: e.target.value })}
-              className="w-full px-3.5 py-2 bg-ivory-50 border border-gold-300 rounded-lg text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-maroon-800"
-            />
-          </div>
-
-          <div>
-            <label className="block text-xs font-semibold text-maroon-950 mb-1">
-              Biography / Introduction (English) *
-            </label>
-            <textarea
-              rows={5}
-              required
-              value={profile.bio_en}
-              onChange={(e) => setProfile({ ...profile, bio_en: e.target.value })}
-              className="w-full px-3.5 py-2 bg-ivory-50 border border-gold-300 rounded-lg text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-maroon-800"
-            />
-          </div>
-        </div>
+        <TranslatePairTextarea
+          labelMr="परिचय / माहिती (मराठी) *"
+          labelEn="Biography / Introduction (English) *"
+          valueMr={profile.bio_mr}
+          valueEn={profile.bio_en}
+          onChangeMr={(val) => setProfile((prev: any) => ({ ...prev, bio_mr: val }))}
+          onChangeEn={(val) => setProfile((prev: any) => ({ ...prev, bio_en: val }))}
+          rows={5}
+          placeholderMr="गुरुजींचा सविस्तर परिचय, वेदविद्या, परंपरा व अनुभव..."
+          placeholderEn="Guruji's detailed background, Vedic education, tradition and experience..."
+          required
+        />
 
         <div className="pt-2">
           <button

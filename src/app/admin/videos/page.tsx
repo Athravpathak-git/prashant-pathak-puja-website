@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { Film, PlusCircle, Edit2, Trash2, X, Play } from 'lucide-react';
+import { TranslatePairInput, TranslatePairTextarea } from '@/components/admin/AutoTranslate';
 
 export default function AdminVideosPage() {
   const [videos, setVideos] = useState<any[]>([]);
@@ -176,17 +177,17 @@ export default function AdminVideosPage() {
             </div>
 
             <form onSubmit={handleSave} className="space-y-4 text-xs sm:text-sm">
-              <div>
-                <label className="block text-xs font-semibold mb-1">मराठी शीर्षक *</label>
-                <input
-                  type="text"
-                  required
-                  value={form.title_mr}
-                  onChange={(e) => setForm({ ...form, title_mr: e.target.value })}
-                  placeholder="उदा. श्री रुद्र अभिषेक विधी"
-                  className="w-full px-3 py-2 bg-ivory-50 border border-gold-300 rounded-lg focus:outline-none"
-                />
-              </div>
+              <TranslatePairInput
+                labelMr="व्हिडिओ शीर्षक (मराठी) *"
+                labelEn="Video Title (English) *"
+                valueMr={form.title_mr}
+                valueEn={form.title_en}
+                onChangeMr={(val) => setForm((prev) => ({ ...prev, title_mr: val }))}
+                onChangeEn={(val) => setForm((prev) => ({ ...prev, title_en: val }))}
+                placeholderMr="उदा. श्री रुद्र अभिषेक विधी"
+                placeholderEn="e.g. Shri Rudra Abhishek Ritual"
+                required
+              />
 
               <div>
                 <label className="block text-xs font-semibold mb-1">YouTube URL *</label>
@@ -200,15 +201,17 @@ export default function AdminVideosPage() {
                 />
               </div>
 
-              <div>
-                <label className="block text-xs font-semibold mb-1">वर्णन</label>
-                <textarea
-                  rows={3}
-                  value={form.description_mr}
-                  onChange={(e) => setForm({ ...form, description_mr: e.target.value })}
-                  className="w-full px-3 py-2 bg-ivory-50 border border-gold-300 rounded-lg focus:outline-none"
-                />
-              </div>
+              <TranslatePairTextarea
+                labelMr="वर्णन (मराठी)"
+                labelEn="Video Description (English)"
+                valueMr={form.description_mr}
+                valueEn={form.description_en}
+                onChangeMr={(val) => setForm((prev) => ({ ...prev, description_mr: val }))}
+                onChangeEn={(val) => setForm((prev) => ({ ...prev, description_en: val }))}
+                rows={3}
+                placeholderMr="व्हिडिओबद्दल माहिती, विधी महत्त्व..."
+                placeholderEn="Information about the video, ritual significance..."
+              />
 
               <div className="pt-3 border-t border-gold-200 flex justify-end gap-2">
                 <button

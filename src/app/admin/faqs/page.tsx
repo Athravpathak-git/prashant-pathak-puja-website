@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { HelpCircle, PlusCircle, Edit2, Trash2, X } from 'lucide-react';
+import { TranslatePairInput, TranslatePairTextarea } from '@/components/admin/AutoTranslate';
 
 export default function AdminFaqsPage() {
   const [faqs, setFaqs] = useState<any[]>([]);
@@ -177,27 +178,30 @@ export default function AdminFaqsPage() {
             </div>
 
             <form onSubmit={handleSave} className="space-y-4 text-xs sm:text-sm">
-              <div>
-                <label className="block text-xs font-semibold mb-1">प्रश्न (मराठी) *</label>
-                <input
-                  type="text"
-                  required
-                  value={form.question_mr}
-                  onChange={(e) => setForm({ ...form, question_mr: e.target.value })}
-                  className="w-full px-3 py-2 bg-ivory-50 border border-gold-300 rounded-lg focus:outline-none"
-                />
-              </div>
+              <TranslatePairInput
+                labelMr="प्रश्न (मराठी) *"
+                labelEn="Question (English) *"
+                valueMr={form.question_mr}
+                valueEn={form.question_en}
+                onChangeMr={(val) => setForm((prev) => ({ ...prev, question_mr: val }))}
+                onChangeEn={(val) => setForm((prev) => ({ ...prev, question_en: val }))}
+                placeholderMr="उदा. वास्तुशांतीसाठी कोणता मुहूर्त उत्तम असतो?"
+                placeholderEn="e.g. Which muhurat is best for Vastu Shanti?"
+                required
+              />
 
-              <div>
-                <label className="block text-xs font-semibold mb-1">उत्तर (मराठी) *</label>
-                <textarea
-                  rows={4}
-                  required
-                  value={form.answer_mr}
-                  onChange={(e) => setForm({ ...form, answer_mr: e.target.value })}
-                  className="w-full px-3 py-2 bg-ivory-50 border border-gold-300 rounded-lg focus:outline-none"
-                />
-              </div>
+              <TranslatePairTextarea
+                labelMr="उत्तर (मराठी) *"
+                labelEn="Answer (English) *"
+                valueMr={form.answer_mr}
+                valueEn={form.answer_en}
+                onChangeMr={(val) => setForm((prev) => ({ ...prev, answer_mr: val }))}
+                onChangeEn={(val) => setForm((prev) => ({ ...prev, answer_en: val }))}
+                rows={4}
+                placeholderMr="शास्त्राधारित सविस्तर उत्तर येथे लिहा..."
+                placeholderEn="Write the detailed scriptural answer here..."
+                required
+              />
 
               <div>
                 <label className="block text-xs font-semibold mb-1">वर्गवारी (Category)</label>

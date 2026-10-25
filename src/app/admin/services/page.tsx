@@ -17,6 +17,7 @@ import {
   Upload
 } from 'lucide-react';
 import { ImageCropModal } from '@/components/ImageCropModal';
+import { TranslatePairInput, TranslatePairTextarea } from '@/components/admin/AutoTranslate';
 
 export default function AdminServicesPage() {
   const [services, setServices] = useState<any[]>([]);
@@ -397,35 +398,20 @@ export default function AdminServicesPage() {
             </div>
 
             <form onSubmit={handleSaveService} className="p-6 overflow-y-auto space-y-5 text-xs sm:text-sm">
+              {/* Puja Name Pair (Auto-Translating) */}
+              <TranslatePairInput
+                labelMr="पूजा नाव (मराठी) *"
+                labelEn="Puja Name (English) *"
+                valueMr={form.name_mr}
+                valueEn={form.name_en}
+                onChangeMr={(val) => setForm((prev) => ({ ...prev, name_mr: val }))}
+                onChangeEn={(val) => setForm((prev) => ({ ...prev, name_en: val }))}
+                placeholderMr="उदा. वास्तुशांती महापूजा"
+                placeholderEn="e.g. Vastu Shanti Mahapuja"
+                required
+              />
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-semibold text-maroon-950 mb-1">
-                    पूजा नाव (मराठी) *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={form.name_mr}
-                    onChange={(e) => setForm({ ...form, name_mr: e.target.value })}
-                    placeholder="उदा. वास्तुशांती"
-                    className="w-full px-3 py-2 bg-ivory-50 border border-gold-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-maroon-800"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-semibold text-maroon-950 mb-1">
-                    Puja Name (English) *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={form.name_en}
-                    onChange={(e) => setForm({ ...form, name_en: e.target.value })}
-                    placeholder="e.g. Vastu Shanti Puja"
-                    className="w-full px-3 py-2 bg-ivory-50 border border-gold-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-maroon-800"
-                  />
-                </div>
-
                 <div>
                   <label className="block text-xs font-semibold text-maroon-950 mb-1">
                     वर्गवारी (Category) *
@@ -457,86 +443,57 @@ export default function AdminServicesPage() {
                 </div>
               </div>
 
-              {/* Short Description */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-semibold text-maroon-950 mb-1">
-                    संक्षिप्त वर्णन (मराठी)
-                  </label>
-                  <textarea
-                    rows={2}
-                    value={form.short_desc_mr}
-                    onChange={(e) => setForm({ ...form, short_desc_mr: e.target.value })}
-                    className="w-full px-3 py-2 bg-ivory-50 border border-gold-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-maroon-800"
-                  />
-                </div>
+              {/* Short Description Pair (Auto-Translating) */}
+              <TranslatePairTextarea
+                labelMr="संक्षिप्त वर्णन (मराठी)"
+                labelEn="Short Description (English)"
+                valueMr={form.short_desc_mr}
+                valueEn={form.short_desc_en}
+                onChangeMr={(val) => setForm((prev) => ({ ...prev, short_desc_mr: val }))}
+                onChangeEn={(val) => setForm((prev) => ({ ...prev, short_desc_en: val }))}
+                rows={2}
+                placeholderMr="विधीबद्दल २-३ ओळीत थोडक्यात माहिती लिहा..."
+                placeholderEn="Brief 2-3 line summary of the puja..."
+              />
 
-                <div>
-                  <label className="block text-xs font-semibold text-maroon-950 mb-1">
-                    Short Description (English)
-                  </label>
-                  <textarea
-                    rows={2}
-                    value={form.short_desc_en}
-                    onChange={(e) => setForm({ ...form, short_desc_en: e.target.value })}
-                    className="w-full px-3 py-2 bg-ivory-50 border border-gold-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-maroon-800"
-                  />
-                </div>
-              </div>
+              {/* Detailed Significance Pair (Auto-Translating) */}
+              <TranslatePairTextarea
+                labelMr="सविस्तर वर्णन व महत्त्व (मराठी)"
+                labelEn="Detailed Significance (English)"
+                valueMr={form.detailed_desc_mr}
+                valueEn={form.detailed_desc_en}
+                onChangeMr={(val) => setForm((prev) => ({ ...prev, detailed_desc_mr: val }))}
+                onChangeEn={(val) => setForm((prev) => ({ ...prev, detailed_desc_en: val }))}
+                rows={3}
+                placeholderMr="विधीचे महत्त्व, फलप्राप्ती व शास्त्राधार..."
+                placeholderEn="Significance, spiritual benefits and scriptural context..."
+              />
 
-              {/* Detailed Description */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-semibold text-maroon-950 mb-1">
-                    सविस्तर वर्णन व महत्त्व (मराठी)
-                  </label>
-                  <textarea
-                    rows={3}
-                    value={form.detailed_desc_mr}
-                    onChange={(e) => setForm({ ...form, detailed_desc_mr: e.target.value })}
-                    className="w-full px-3 py-2 bg-ivory-50 border border-gold-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-maroon-800"
-                  />
-                </div>
+              {/* Materials List Pair (Auto-Translating) */}
+              <TranslatePairTextarea
+                labelMr="साहित्य यादी (Materials in Marathi)"
+                labelEn="Materials List (English)"
+                valueMr={form.materials_mr}
+                valueEn={form.materials_en}
+                onChangeMr={(val) => setForm((prev) => ({ ...prev, materials_mr: val }))}
+                onChangeEn={(val) => setForm((prev) => ({ ...prev, materials_en: val }))}
+                rows={2}
+                placeholderMr="उदा. हळद, कुंकू, अष्टगंध, तांदूळ, सुपारी, विड्याची पाने, नारळ, तूप..."
+                placeholderEn="e.g. Turmeric, kumkum, ashtagandha, rice, betel nuts, coconut, ghee..."
+              />
 
-                <div>
-                  <label className="block text-xs font-semibold text-maroon-950 mb-1">
-                    Detailed Significance (English)
-                  </label>
-                  <textarea
-                    rows={3}
-                    value={form.detailed_desc_en}
-                    onChange={(e) => setForm({ ...form, detailed_desc_en: e.target.value })}
-                    className="w-full px-3 py-2 bg-ivory-50 border border-gold-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-maroon-800"
-                  />
-                </div>
-              </div>
-
-              {/* Materials & Procedure */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-semibold text-maroon-950 mb-1">
-                    साहित्य यादी (Materials in Marathi)
-                  </label>
-                  <textarea
-                    rows={2}
-                    value={form.materials_mr}
-                    onChange={(e) => setForm({ ...form, materials_mr: e.target.value })}
-                    className="w-full px-3 py-2 bg-ivory-50 border border-gold-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-maroon-800"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-semibold text-maroon-950 mb-1">
-                    विधी प्रक्रिया (Procedure in Marathi)
-                  </label>
-                  <textarea
-                    rows={2}
-                    value={form.procedure_mr}
-                    onChange={(e) => setForm({ ...form, procedure_mr: e.target.value })}
-                    className="w-full px-3 py-2 bg-ivory-50 border border-gold-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-maroon-800"
-                  />
-                </div>
-              </div>
+              {/* Procedure Vidhi Pair (Auto-Translating) */}
+              <TranslatePairTextarea
+                labelMr="विधी प्रक्रिया (Procedure in Marathi)"
+                labelEn="Puja Procedure (English)"
+                valueMr={form.procedure_mr}
+                valueEn={form.procedure_en}
+                onChangeMr={(val) => setForm((prev) => ({ ...prev, procedure_mr: val }))}
+                onChangeEn={(val) => setForm((prev) => ({ ...prev, procedure_en: val }))}
+                rows={2}
+                placeholderMr="उदा. १. गणपती पूजन, २. कलश स्थापना, ३. मुख्य हवन, ४. आरती..."
+                placeholderEn="e.g. 1. Ganpati Puja, 2. Kalash Installation, 3. Main Havan, 4. Aarti..."
+              />
 
               {/* Toggles */}
               <div className="flex flex-wrap gap-6 pt-2 border-t border-gold-200">

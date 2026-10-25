@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { MessageSquareQuote, CheckCircle2, XCircle, Trash2, Edit2, PlusCircle, Star, X } from 'lucide-react';
+import { TranslatePairInput, TranslatePairTextarea } from '@/components/admin/AutoTranslate';
 
 export default function AdminTestimonialsPage() {
   const [testimonials, setTestimonials] = useState<any[]>([]);
@@ -201,27 +202,28 @@ export default function AdminTestimonialsPage() {
             </div>
 
             <form onSubmit={handleSave} className="space-y-4 text-xs sm:text-sm">
-              <div>
-                <label className="block text-xs font-semibold mb-1">यजमान नाव (मराठी) *</label>
-                <input
-                  type="text"
-                  required
-                  value={form.author_name_mr}
-                  onChange={(e) => setForm({ ...form, author_name_mr: e.target.value })}
-                  className="w-full px-3 py-2 bg-ivory-50 border border-gold-300 rounded-lg focus:outline-none"
-                />
-              </div>
+              <TranslatePairInput
+                labelMr="यजमान नाव (मराठी) *"
+                labelEn="Devotee Name (English) *"
+                valueMr={form.author_name_mr}
+                valueEn={form.author_name_en}
+                onChangeMr={(val) => setForm((prev) => ({ ...prev, author_name_mr: val }))}
+                onChangeEn={(val) => setForm((prev) => ({ ...prev, author_name_en: val }))}
+                placeholderMr="उदा. श्री राहुल देशपांडे"
+                placeholderEn="e.g. Shri Rahul Deshpande"
+                required
+              />
 
-              <div>
-                <label className="block text-xs font-semibold mb-1">स्थान / शहर</label>
-                <input
-                  type="text"
-                  value={form.location_mr}
-                  onChange={(e) => setForm({ ...form, location_mr: e.target.value })}
-                  placeholder="नागपूर"
-                  className="w-full px-3 py-2 bg-ivory-50 border border-gold-300 rounded-lg focus:outline-none"
-                />
-              </div>
+              <TranslatePairInput
+                labelMr="स्थान / शहर (मराठी)"
+                labelEn="Location / City (English)"
+                valueMr={form.location_mr}
+                valueEn={form.location_en}
+                onChangeMr={(val) => setForm((prev) => ({ ...prev, location_mr: val }))}
+                onChangeEn={(val) => setForm((prev) => ({ ...prev, location_en: val }))}
+                placeholderMr="उदा. नागपूर"
+                placeholderEn="e.g. Nagpur"
+              />
 
               <div>
                 <label className="block text-xs font-semibold mb-1">रेटिंग</label>
@@ -236,16 +238,18 @@ export default function AdminTestimonialsPage() {
                 </select>
               </div>
 
-              <div>
-                <label className="block text-xs font-semibold mb-1">अभिप्राय (मराठी) *</label>
-                <textarea
-                  rows={4}
-                  required
-                  value={form.comment_mr}
-                  onChange={(e) => setForm({ ...form, comment_mr: e.target.value })}
-                  className="w-full px-3 py-2 bg-ivory-50 border border-gold-300 rounded-lg focus:outline-none"
-                />
-              </div>
+              <TranslatePairTextarea
+                labelMr="अभिप्राय (मराठी) *"
+                labelEn="Devotee Review / Comment (English) *"
+                valueMr={form.comment_mr}
+                valueEn={form.comment_en}
+                onChangeMr={(val) => setForm((prev) => ({ ...prev, comment_mr: val }))}
+                onChangeEn={(val) => setForm((prev) => ({ ...prev, comment_en: val }))}
+                rows={3}
+                placeholderMr="गुरुजींच्या पूजा विधीबद्दलचा आपला अनुभव..."
+                placeholderEn="Experience with Guruji's puja guidance and rituals..."
+                required
+              />
 
               <div className="pt-2">
                 <label className="flex items-center gap-1.5 cursor-pointer text-xs">

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { TranslatePairInput } from '@/components/admin/AutoTranslate';
 import {
   Settings,
   Save,
@@ -168,35 +169,17 @@ export default function AdminSettingsPage() {
             <span className="text-saffron-600 font-bold">१.</span> गुरुजींचे नाव (Guruji Name)
           </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-xs font-semibold text-charcoal-700 mb-1">
-                नाव (मराठी) *
-              </label>
-              <input
-                type="text"
-                name="guruji_name_mr"
-                value={formData.guruji_name_mr}
-                onChange={handleChange}
-                required
-                className="w-full px-3.5 py-2.5 rounded-xl border border-gold-300 focus:outline-none focus:ring-2 focus:ring-saffron-500 text-sm bg-ivory-50/50"
-              />
-            </div>
-
-            <div>
-              <label className="block text-xs font-semibold text-charcoal-700 mb-1">
-                Name (English) *
-              </label>
-              <input
-                type="text"
-                name="guruji_name_en"
-                value={formData.guruji_name_en}
-                onChange={handleChange}
-                required
-                className="w-full px-3.5 py-2.5 rounded-xl border border-gold-300 focus:outline-none focus:ring-2 focus:ring-saffron-500 text-sm bg-ivory-50/50"
-              />
-            </div>
-          </div>
+          <TranslatePairInput
+            labelMr="नाव (मराठी) *"
+            labelEn="Name (English) *"
+            valueMr={formData.guruji_name_mr}
+            valueEn={formData.guruji_name_en}
+            onChangeMr={(val) => setFormData((prev) => ({ ...prev, guruji_name_mr: val }))}
+            onChangeEn={(val) => setFormData((prev) => ({ ...prev, guruji_name_en: val }))}
+            placeholderMr="उदा. वे.मु. प्रशांत पाठक (गुरुजी)"
+            placeholderEn="e.g. Ve.Mu. Prashant Pathak (Guruji)"
+            required
+          />
         </div>
 
         {/* Public Contact & Location */}
@@ -205,37 +188,17 @@ export default function AdminSettingsPage() {
             <span className="text-saffron-600 font-bold">२.</span> अधिकृत संपर्क व स्थान (Contact & Location)
           </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-xs font-semibold text-charcoal-700 mb-1 flex items-center gap-1.5">
-                <MapPin className="w-3.5 h-3.5 text-saffron-600" />
-                स्थान (मराठी) *
-              </label>
-              <input
-                type="text"
-                name="contact_location_mr"
-                value={formData.contact_location_mr}
-                onChange={handleChange}
-                required
-                className="w-full px-3.5 py-2.5 rounded-xl border border-gold-300 focus:outline-none focus:ring-2 focus:ring-saffron-500 text-sm bg-ivory-50/50"
-              />
-            </div>
-
-            <div>
-              <label className="block text-xs font-semibold text-charcoal-700 mb-1 flex items-center gap-1.5">
-                <MapPin className="w-3.5 h-3.5 text-saffron-600" />
-                Location (English) *
-              </label>
-              <input
-                type="text"
-                name="contact_location_en"
-                value={formData.contact_location_en}
-                onChange={handleChange}
-                required
-                className="w-full px-3.5 py-2.5 rounded-xl border border-gold-300 focus:outline-none focus:ring-2 focus:ring-saffron-500 text-sm bg-ivory-50/50"
-              />
-            </div>
-          </div>
+          <TranslatePairInput
+            labelMr="स्थान (मराठी) *"
+            labelEn="Location (English) *"
+            valueMr={formData.contact_location_mr}
+            valueEn={formData.contact_location_en}
+            onChangeMr={(val) => setFormData((prev) => ({ ...prev, contact_location_mr: val }))}
+            onChangeEn={(val) => setFormData((prev) => ({ ...prev, contact_location_en: val }))}
+            placeholderMr="उदा. नागपूर, महाराष्ट्र"
+            placeholderEn="e.g. Nagpur, Maharashtra"
+            required
+          />
 
           <div>
             <label className="block text-xs font-semibold text-charcoal-700 mb-1 flex items-center gap-1.5">

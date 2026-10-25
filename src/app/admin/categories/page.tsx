@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { FolderTree, PlusCircle, Edit2, Trash2, CheckCircle2, X } from 'lucide-react';
+import { TranslatePairInput } from '@/components/admin/AutoTranslate';
 
 export default function AdminCategoriesPage() {
   const [categories, setCategories] = useState<any[]>([]);
@@ -176,29 +177,17 @@ export default function AdminCategoriesPage() {
             </div>
 
             <form onSubmit={handleSave} className="space-y-4 text-xs sm:text-sm">
-              <div>
-                <label className="block text-xs font-semibold mb-1">मराठी नाव *</label>
-                <input
-                  type="text"
-                  required
-                  value={form.name_mr}
-                  onChange={(e) => setForm({ ...form, name_mr: e.target.value })}
-                  placeholder="उदा. गृहशांती"
-                  className="w-full px-3 py-2 bg-ivory-50 border border-gold-300 rounded-lg focus:outline-none"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-semibold mb-1">English Name *</label>
-                <input
-                  type="text"
-                  required
-                  value={form.name_en}
-                  onChange={(e) => setForm({ ...form, name_en: e.target.value })}
-                  placeholder="e.g. Grah Shanti"
-                  className="w-full px-3 py-2 bg-ivory-50 border border-gold-300 rounded-lg focus:outline-none"
-                />
-              </div>
+              <TranslatePairInput
+                labelMr="मराठी नाव *"
+                labelEn="English Name *"
+                valueMr={form.name_mr}
+                valueEn={form.name_en}
+                onChangeMr={(val) => setForm((prev) => ({ ...prev, name_mr: val }))}
+                onChangeEn={(val) => setForm((prev) => ({ ...prev, name_en: val }))}
+                placeholderMr="उदा. गृहशांती"
+                placeholderEn="e.g. Grah Shanti"
+                required
+              />
 
               <div>
                 <label className="block text-xs font-semibold mb-1">Slug</label>

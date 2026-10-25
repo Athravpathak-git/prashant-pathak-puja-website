@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { ImageCropModal } from '@/components/ImageCropModal';
+import { TranslatePairInput } from '@/components/admin/AutoTranslate';
 import {
   Image as ImageIcon,
   UploadCloud,
@@ -487,35 +488,18 @@ export default function AdminGalleryPage() {
                 </div>
               )}
 
-              {/* Title Marathi */}
-              <div>
-                <label className="block text-xs font-semibold text-charcoal-700 mb-1">
-                  मराठी शीर्षक *
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={metaForm.title_mr}
-                  onChange={(e) => setMetaForm({ ...metaForm, title_mr: e.target.value })}
-                  className="w-full px-3 py-2 bg-ivory-50 border border-gold-300 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-saffron-500"
-                  placeholder="उदा. श्री सत्यनारायण महापूजा"
-                />
-              </div>
-
-              {/* Title English */}
-              <div>
-                <label className="block text-xs font-semibold text-charcoal-700 mb-1">
-                  English Title *
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={metaForm.title_en}
-                  onChange={(e) => setMetaForm({ ...metaForm, title_en: e.target.value })}
-                  className="w-full px-3 py-2 bg-ivory-50 border border-gold-300 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-saffron-500"
-                  placeholder="e.g. Shri Satyanarayan Mahapuja"
-                />
-              </div>
+              {/* Title Pair (Auto-Translating) */}
+              <TranslatePairInput
+                labelMr="मराठी शीर्षक *"
+                labelEn="English Title *"
+                valueMr={metaForm.title_mr}
+                valueEn={metaForm.title_en}
+                onChangeMr={(val) => setMetaForm((prev) => ({ ...prev, title_mr: val }))}
+                onChangeEn={(val) => setMetaForm((prev) => ({ ...prev, title_en: val }))}
+                placeholderMr="उदा. श्री सत्यनारायण महापूजा"
+                placeholderEn="e.g. Shri Satyanarayan Mahapuja"
+                required
+              />
 
               {/* Category */}
               <div>

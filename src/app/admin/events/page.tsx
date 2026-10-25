@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { Calendar, PlusCircle, Edit2, Trash2, X } from 'lucide-react';
+import { TranslatePairInput, TranslatePairTextarea } from '@/components/admin/AutoTranslate';
 
 export default function AdminEventsPage() {
   const [events, setEvents] = useState<any[]>([]);
@@ -182,27 +183,17 @@ export default function AdminEventsPage() {
             </div>
 
             <form onSubmit={handleSave} className="space-y-4 text-xs sm:text-sm">
-              <div>
-                <label className="block text-xs font-semibold mb-1">कार्यक्रम शीर्षक (मराठी) *</label>
-                <input
-                  type="text"
-                  required
-                  value={form.title_mr}
-                  onChange={(e) => setForm({ ...form, title_mr: e.target.value })}
-                  className="w-full px-3 py-2 bg-ivory-50 border border-gold-300 rounded-lg focus:outline-none"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-semibold mb-1">Event Title (English) *</label>
-                <input
-                  type="text"
-                  required
-                  value={form.title_en}
-                  onChange={(e) => setForm({ ...form, title_en: e.target.value })}
-                  className="w-full px-3 py-2 bg-ivory-50 border border-gold-300 rounded-lg focus:outline-none"
-                />
-              </div>
+              <TranslatePairInput
+                labelMr="कार्यक्रम शीर्षक (मराठी) *"
+                labelEn="Event Title (English) *"
+                valueMr={form.title_mr}
+                valueEn={form.title_en}
+                onChangeMr={(val) => setForm((prev) => ({ ...prev, title_mr: val }))}
+                onChangeEn={(val) => setForm((prev) => ({ ...prev, title_en: val }))}
+                placeholderMr="उदा. श्रावण मास शिव महाअभिषेक"
+                placeholderEn="e.g. Shravan Maas Shiva Maha Abhishek"
+                required
+              />
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
@@ -238,15 +229,17 @@ export default function AdminEventsPage() {
                 />
               </div>
 
-              <div>
-                <label className="block text-xs font-semibold mb-1">वर्णन (मराठी)</label>
-                <textarea
-                  rows={3}
-                  value={form.description_mr}
-                  onChange={(e) => setForm({ ...form, description_mr: e.target.value })}
-                  className="w-full px-3 py-2 bg-ivory-50 border border-gold-300 rounded-lg focus:outline-none"
-                />
-              </div>
+              <TranslatePairTextarea
+                labelMr="वर्णन (मराठी)"
+                labelEn="Event Description (English)"
+                valueMr={form.description_mr}
+                valueEn={form.description_en}
+                onChangeMr={(val) => setForm((prev) => ({ ...prev, description_mr: val }))}
+                onChangeEn={(val) => setForm((prev) => ({ ...prev, description_en: val }))}
+                rows={3}
+                placeholderMr="कार्यक्रमाबद्दल अधिक माहिती, विधी स्वरूप व सहभागी होण्याची पद्धत..."
+                placeholderEn="More details about the event, ritual schedule, and participation guidelines..."
+              />
 
               <div className="pt-3 border-t border-gold-200 flex justify-end gap-2">
                 <button
