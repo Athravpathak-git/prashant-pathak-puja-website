@@ -61,40 +61,48 @@ export function BlogClient() {
             {featured && (
               <GlassCard
                 variant="ivory"
-                padding="p-6 sm:p-10"
+                padding="p-6 sm:p-8"
                 className="border-2 border-[#B58A3A]/50 shadow-[0_16px_50px_rgba(90,23,32,0.08)] relative"
               >
                 <SacredCorner position="top-left" />
-                <div className="space-y-4">
-                  <div className="flex items-center gap-3 text-xs">
-                    <span className="px-3 py-1 rounded-full bg-[#FAF7F0] text-[#5A1720] font-serif font-bold border border-[#B58A3A]/40 shadow-xs">
-                      {featured.category || 'धार्मिक माहिती'}
-                    </span>
-                    <span className="flex items-center gap-1.5 font-serif text-[#944B14] font-semibold">
-                      <Calendar className="w-3.5 h-3.5" />
-                      {new Date(featured.published_at || featured.created_at).toLocaleDateString(
-                        language === 'mr' ? 'mr-IN' : 'en-US',
-                        { day: 'numeric', month: 'long', year: 'numeric' }
-                      )}
-                    </span>
-                  </div>
+                <div className="flex flex-col md:flex-row gap-6 items-center">
+                  {featured.featured_image && (
+                    <div className="w-full md:w-1/3 aspect-[4/3] rounded-xl overflow-hidden border border-[#B58A3A]/40 shrink-0">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={featured.featured_image} alt="" className="w-full h-full object-cover" />
+                    </div>
+                  )}
+                  <div className="flex-1 space-y-4">
+                    <div className="flex items-center gap-3 text-xs">
+                      <span className="px-3 py-1 rounded-full bg-[#FAF7F0] text-[#5A1720] font-serif font-bold border border-[#B58A3A]/40 shadow-xs">
+                        {featured.category || 'धार्मिक माहिती'}
+                      </span>
+                      <span className="flex items-center gap-1.5 font-serif text-[#944B14] font-semibold">
+                        <Calendar className="w-3.5 h-3.5" />
+                        {new Date(featured.published_at || featured.created_at).toLocaleDateString(
+                          language === 'mr' ? 'mr-IN' : 'en-US',
+                          { day: 'numeric', month: 'long', year: 'numeric' }
+                        )}
+                      </span>
+                    </div>
 
-                  <h2 className="font-serif font-bold text-2xl sm:text-3xl text-[#321116] leading-snug">
-                    {getLocalized(featured, 'title')}
-                  </h2>
+                    <h2 className="font-serif font-bold text-2xl sm:text-3xl text-[#321116] leading-snug">
+                      {getLocalized(featured, 'title')}
+                    </h2>
 
-                  <p className="text-xs sm:text-sm text-[#282321] font-serif leading-relaxed line-clamp-3">
-                    {getLocalized(featured, 'excerpt')}
-                  </p>
+                    <p className="text-xs sm:text-sm text-[#282321] font-serif leading-relaxed line-clamp-3">
+                      {getLocalized(featured, 'excerpt')}
+                    </p>
 
-                  <div className="pt-2">
-                    <Link
-                      href={`/blog/${featured.slug || featured.id}`}
-                      className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-gradient-to-r from-[#5A1720] to-[#421218] text-[#FAF7F0] text-xs font-bold shadow-xs hover:scale-105 transition-transform"
-                    >
-                      <span>संपूर्ण लेख वाचा</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </Link>
+                    <div className="pt-2">
+                      <Link
+                        href={`/blog/${featured.slug || featured.id}`}
+                        className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-gradient-to-r from-[#5A1720] to-[#421218] text-[#FAF7F0] text-xs font-bold shadow-xs hover:scale-105 transition-transform"
+                      >
+                        <span>संपूर्ण लेख वाचा</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </GlassCard>
@@ -112,6 +120,17 @@ export function BlogClient() {
                     className="border border-[#B58A3A]/40 overflow-hidden flex flex-col justify-between group"
                   >
                     <SacredAccentLine />
+
+                    {post.featured_image && (
+                      <div className="aspect-[16/9] w-full overflow-hidden bg-ivory-100">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={post.featured_image}
+                          alt=""
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                        />
+                      </div>
+                    )}
 
                     <div className="p-6 sm:p-7 space-y-4">
                       <div className="flex items-center justify-between text-xs text-[#6F625A]">

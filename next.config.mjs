@@ -3,6 +3,28 @@ const nextConfig = {
   reactStrictMode: true,
   images: {
     unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.public.blob.vercel-storage.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'prashant-pathak-guruji-website.vercel.app',
+      },
+      {
+        protocol: 'https',
+        hostname: 'prashant-pathak-puja-website.vercel.app',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+    ],
   },
   async redirects() {
     return [

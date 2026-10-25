@@ -1,17 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
 import { requireAdmin } from '@/lib/auth';
-import { checkRateLimit, validateImageMagicBytes, generateSafeFileName } from '@/lib/security';
-import { query } from '@/lib/db';
+import { checkRateLimit, validateMediaMagicBytes, generateSafeFileName } from '@/lib/security';
 import { logAudit } from '@/lib/audit';
+import { uploadMediaFile } from '@/lib/storage';
 
-const UPLOAD_DIR = path.join(process.cwd(), 'uploads');
-
-// Ensure directory exists
-if (!fs.existsSync(UPLOAD_DIR)) {
-  fs.mkdirSync(UPLOAD_DIR, { recursive: true });
-}
+export const dynamic = 'force-dynamic';
 
 export async function POST(req: NextRequest) {
   // 1. Admin authorization check
@@ -35,14 +28,17 @@ export async function POST(req: NextRequest) {
     const category = (formData.get('category') as string) || 'general';
 
     if (!file) {
-      return NextResponse.json({ error: 'कोणतीही फाईल निवडलेली नाही. / No file provided.' }, { status: 400 });
+      return NextResponse.json(
+        { error: 'कोणतीही फाईल निवडलेली नाही. / No file provided.' },
+        { status: 400 }
+      );
     }
 
-    // Check size (max 10MB)
-    const MAX_SIZE = 10 * 1024 * 1024;
-    if (file.size > MAX_SIZE) {
+    // 3. Absolute ceiling check (50MB)
+    const ABSOLUTE_MAX_SIZE = 50 * 1024 * 1024;
+    if (file.size > ABSOLUTE_MAX_SIZE) {
       return NextResponse.json(
-        { error: 'फाईल आकार १० MB पेक्षा लहान असावा. / File exceeds 10MB limit.' },
+        { error: 'फाईल आकार ५० MB पेक्षा जास्त असू नये. / File exceeds 50MB limit.' },
         { status: 400 }
       );
     }
@@ -50,52 +46,61 @@ export async function POST(req: NextRequest) {
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
-    // Validate actual magic bytes
-    const magic = validateImageMagicBytes(buffer);
-    if (!magic.valid || !magic.ext) {
+    // 4. Validate magic bytes / file signature
+    const magic = validateMediaMagicBytes(buffer);
+    if (!magic.valid || !magic.ext || !magic.mime) {
       return NextResponse.json(
-        { error: 'अवैध फाईल प्रकार. केवळ JPG, PNG किंवा WebP फाईल्स अनुमत आहेत. / Only JPG, PNG, WebP allowed.' },
+        {
+          error:
+            'अवैध फाईल प्रकार. केवळ JPG, PNG, WebP, GIF, SVG प्रतिमा आणि MP4, WebM व्हिडीओ अनुमत आहेत. / Only JPG, PNG, WebP, GIF, SVG images and MP4, WebM videos are allowed.',
+        },
         { status: 400 }
       );
     }
 
-    // Generate safe random filename
-    const safeFilename = generateSafeFileName(magic.ext);
-    const targetPath = path.join(UPLOAD_DIR, safeFilename);
-
-    // Prevent path traversal
-    if (!targetPath.startsWith(UPLOAD_DIR)) {
-      return NextResponse.json({ error: 'सुरक्षा त्रुटी: अवैध मार्ग. / Path traversal detected.' }, { status: 400 });
+    // 5. Specific type size limits: 10MB for images, 50MB for videos
+    const MAX_IMAGE_SIZE = 10 * 1024 * 1024;
+    if (magic.type === 'image' && file.size > MAX_IMAGE_SIZE) {
+      return NextResponse.json(
+        { error: 'प्रतिमेचा आकार कमाल १० MB असावा. / Image exceeds 10MB limit.' },
+        { status: 400 }
+      );
     }
 
-    fs.writeFileSync(targetPath, buffer);
+    // 6. Generate random, unguessable safe filename
+    const safeFilename = generateSafeFileName(magic.ext);
 
-    const publicUrl = `/api/uploads/${safeFilename}`;
-
-    // Store in media table
-    const mediaRes = await query(`
-      INSERT INTO media (filename, original_name, mime_type, file_size, category, url)
-      VALUES ($1, $2, $3, $4, $5, $6)
-      RETURNING id, filename, url, created_at
-    `, [
-      safeFilename,
-      file.name.slice(0, 200),
-      `image/${magic.ext === 'jpg' ? 'jpeg' : magic.ext}`,
-      file.size,
-      category,
-      publicUrl,
-    ]);
-
-    await logAudit('UPLOAD_MEDIA', 'media', mediaRes.rows[0].id, {
+    // 7. Upload to persistent storage (Cloudinary, Vercel Blob, or PostgreSQL Database fallback)
+    const storageResult = await uploadMediaFile({
+      buffer,
       filename: safeFilename,
-      size: file.size,
-      mime: magic.ext,
-    }, req, auth.admin);
+      originalName: file.name,
+      mimeType: magic.mime,
+      category,
+    });
+
+    // 8. Audit log entry
+    await logAudit(
+      'UPLOAD_MEDIA',
+      'media',
+      storageResult.id,
+      {
+        filename: safeFilename,
+        originalName: file.name,
+        size: file.size,
+        mime: magic.mime,
+        provider: storageResult.storageProvider,
+      },
+      req,
+      auth.admin
+    );
 
     return NextResponse.json({
       success: true,
-      media: mediaRes.rows[0],
-      url: publicUrl,
+      url: storageResult.url,
+      fileUrl: storageResult.url, // Backwards compatibility for settings page
+      media: storageResult,
+      provider: storageResult.storageProvider,
     });
   } catch (err: any) {
     console.error('[UPLOAD-ERROR]', err);

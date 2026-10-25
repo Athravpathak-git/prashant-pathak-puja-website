@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { BookOpen, PlusCircle, Edit2, Trash2, X, Calendar } from 'lucide-react';
+import { BookOpen, PlusCircle, Edit2, Trash2, X, Calendar, Upload, Image as ImageIcon, Loader2 } from 'lucide-react';
 import { TranslatePairInput, TranslatePairTextarea } from '@/components/admin/AutoTranslate';
 
 export default function AdminBlogPage() {
@@ -9,11 +9,14 @@ export default function AdminBlogPage() {
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const [imageError, setImageError] = useState<string | null>(null);
   const [form, setForm] = useState({
     title_mr: '',
     title_en: '',
     slug: '',
     category: 'धार्मिक माहिती',
+    featured_image: '',
     excerpt_mr: '',
     excerpt_en: '',
     content_mr: '',
@@ -40,11 +43,13 @@ export default function AdminBlogPage() {
 
   const openAdd = () => {
     setEditingId(null);
+    setImageError(null);
     setForm({
       title_mr: '',
       title_en: '',
       slug: '',
       category: 'धार्मिक माहिती',
+      featured_image: '',
       excerpt_mr: '',
       excerpt_en: '',
       content_mr: '',
@@ -56,11 +61,13 @@ export default function AdminBlogPage() {
 
   const openEdit = (p: any) => {
     setEditingId(p.id);
+    setImageError(null);
     setForm({
       title_mr: p.title_mr,
       title_en: p.title_en || '',
       slug: p.slug,
       category: p.category || 'धार्मिक माहिती',
+      featured_image: p.featured_image || '',
       excerpt_mr: p.excerpt_mr || '',
       excerpt_en: p.excerpt_en || '',
       content_mr: p.content_mr || '',
@@ -68,6 +75,44 @@ export default function AdminBlogPage() {
       is_published: Boolean(p.is_published),
     });
     setIsModalOpen(true);
+  };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (file.size > 10 * 1024 * 1024) {
+      setImageError('प्रतिमेचा आकार कमाल १० MB असावा. / Image must be under 10MB.');
+      e.target.value = '';
+      return;
+    }
+
+    setImageError(null);
+    setUploadingImage(true);
+
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('category', 'blog');
+
+    try {
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await res.json();
+      const uploadedUrl = data.url || data.fileUrl;
+      if (res.ok && uploadedUrl) {
+        setForm((prev) => ({ ...prev, featured_image: uploadedUrl }));
+      } else {
+        setImageError(data.error || 'फोटो अपलोड अयशस्वी.');
+      }
+    } catch {
+      setImageError('सर्व्हरशी संपर्क साधताना त्रुटी.');
+    } finally {
+      setUploadingImage(false);
+      e.target.value = '';
+    }
   };
 
   const handleSave = async (e: React.FormEvent) => {
@@ -125,6 +170,7 @@ export default function AdminBlogPage() {
         <table className="w-full text-left text-xs">
           <thead className="bg-ivory-50 text-charcoal-700 font-semibold border-b border-gold-200 uppercase">
             <tr>
+              <th className="py-3 px-4">फोटो</th>
               <th className="py-3 px-4">तारीख</th>
               <th className="py-3 px-4">शीर्षक (मराठी)</th>
               <th className="py-3 px-4">Title (English)</th>
@@ -135,9 +181,19 @@ export default function AdminBlogPage() {
           </thead>
           <tbody className="divide-y divide-gold-100">
             {loading ? (
-              <tr><td colSpan={6} className="py-8 text-center text-maroon-900">लोड होत आहे...</td></tr>
+              <tr><td colSpan={7} className="py-8 text-center text-maroon-900">लोड होत आहे...</td></tr>
             ) : posts.map((p) => (
               <tr key={p.id} className="hover:bg-gold-50/40">
+                <td className="py-2 px-4">
+                  {p.featured_image ? (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img src={p.featured_image} alt="" className="w-10 h-8 rounded object-cover border border-gold-300" />
+                  ) : (
+                    <div className="w-10 h-8 rounded bg-ivory-100 border border-gold-200 flex items-center justify-center">
+                      <ImageIcon className="w-4 h-4 text-gold-400" />
+                    </div>
+                  )}
+                </td>
                 <td className="py-3 px-4 font-mono">
                   {new Date(p.published_at || p.created_at).toLocaleDateString('en-GB')}
                 </td>
@@ -209,6 +265,74 @@ export default function AdminBlogPage() {
                   placeholder="उदा. वास्तु शास्त्र, पूजा महात्म्य"
                   className="w-full px-3 py-2 bg-ivory-50 border border-gold-300 rounded-lg focus:outline-none"
                 />
+              </div>
+
+              {/* Featured Image Upload & Preview */}
+              <div className="bg-ivory-50 p-3 rounded-xl border border-gold-300 space-y-2">
+                <label className="block text-xs font-semibold text-maroon-950">
+                  मुख्य छायाचित्र (Featured Article Image)
+                </label>
+                <div className="flex items-center gap-3">
+                  {form.featured_image ? (
+                    <div className="relative w-24 h-16 rounded-lg overflow-hidden border border-gold-400 shrink-0 bg-white">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={form.featured_image} alt="Featured" className="w-full h-full object-cover" />
+                    </div>
+                  ) : (
+                    <div className="w-24 h-16 rounded-lg border-2 border-dashed border-gold-300 flex flex-col items-center justify-center text-charcoal-400 shrink-0 bg-white">
+                      <ImageIcon className="w-5 h-5 text-gold-500 mb-0.5" />
+                      <span className="text-[9px]">फोटो नाही</span>
+                    </div>
+                  )}
+
+                  <div className="flex-1 space-y-1.5 text-xs">
+                    <div className="flex items-center gap-2">
+                      <label
+                        className={`px-3 py-1.5 bg-maroon-800 hover:bg-maroon-900 text-gold-100 rounded-lg font-semibold flex items-center gap-1.5 transition ${
+                          uploadingImage ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'
+                        }`}
+                      >
+                        {uploadingImage ? (
+                          <Loader2 className="w-3.5 h-3.5 text-gold-300 animate-spin" />
+                        ) : (
+                          <Upload className="w-3.5 h-3.5 text-gold-300" />
+                        )}
+                        <span>
+                          {uploadingImage
+                            ? 'अपलोड सुरू...'
+                            : form.featured_image
+                            ? 'फोटो बदला'
+                            : 'फोटो जोडा (Upload)'}
+                        </span>
+                        <input
+                          type="file"
+                          disabled={uploadingImage}
+                          accept="image/jpeg,image/png,image/webp"
+                          className="hidden"
+                          onChange={handleImageUpload}
+                        />
+                      </label>
+
+                      {form.featured_image && (
+                        <button
+                          type="button"
+                          onClick={() => setForm((prev) => ({ ...prev, featured_image: '' }))}
+                          className="px-2.5 py-1.5 bg-red-50 hover:bg-red-100 text-red-700 rounded-lg font-medium text-xs border border-red-200"
+                        >
+                          काढून टाका
+                        </button>
+                      )}
+                    </div>
+
+                    <p className="text-[10px] text-charcoal-500">
+                      JPG, PNG किंवा WebP (कमाल १० MB)
+                    </p>
+
+                    {imageError && (
+                      <p className="text-[10px] text-red-600 font-medium">{imageError}</p>
+                    )}
+                  </div>
+                </div>
               </div>
 
               <TranslatePairTextarea

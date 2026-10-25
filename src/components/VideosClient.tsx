@@ -25,8 +25,20 @@ export function VideosClient() {
       .finally(() => setLoading(false));
   }, []);
 
+  const isDirectVideo = (url: string) => {
+    if (!url) return false;
+    return (
+      url.startsWith('/api/uploads/') ||
+      url.endsWith('.mp4') ||
+      url.endsWith('.webm') ||
+      url.includes('blob.vercel-storage.com') ||
+      url.includes('/video/upload/')
+    );
+  };
+
   const getEmbedUrl = (url: string) => {
     if (!url) return '';
+    if (isDirectVideo(url)) return url;
     if (url.includes('youtube.com/watch?v=')) {
       return url.replace('watch?v=', 'embed/').split('&')[0];
     }
@@ -171,12 +183,21 @@ export function VideosClient() {
               className="relative w-full max-w-4xl aspect-video bg-black rounded-2xl overflow-hidden border-2 border-[#B58A3A] shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
-              <iframe
-                src={`${activeVideo}?autoplay=1`}
-                className="w-full h-full"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
+              {isDirectVideo(activeVideo) ? (
+                <video
+                  src={activeVideo}
+                  controls
+                  autoPlay
+                  className="w-full h-full object-contain"
+                />
+              ) : (
+                <iframe
+                  src={`${activeVideo}${activeVideo.includes('?') ? '&' : '?'}autoplay=1`}
+                  className="w-full h-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              )}
               <button
                 onClick={() => setActiveVideo(null)}
                 className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/70 text-white flex items-center justify-center hover:bg-black transition-colors"

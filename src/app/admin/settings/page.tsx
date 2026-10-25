@@ -28,7 +28,7 @@ export default function AdminSettingsPage() {
 
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [uploadingLogo, setUploadingLogo] = useState(false);
+  const [uploadingField, setUploadingField] = useState<'logo_url' | 'favicon_url' | null>(null);
   const [statusMsg, setStatusMsg] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   useEffect(() => {
@@ -59,26 +59,35 @@ export default function AdminSettingsPage() {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    if (file.size > 10 * 1024 * 1024) {
+      setStatusMsg({ type: 'error', text: 'प्रतिमेचा आकार कमाल १० MB असावा. / Image exceeds 10MB limit.' });
+      e.target.value = '';
+      return;
+    }
+
     const data = new FormData();
     data.append('file', file);
+    data.append('category', field === 'logo_url' ? 'logo' : 'favicon');
 
-    setUploadingLogo(true);
+    setUploadingField(field);
     try {
       const res = await fetch('/api/upload', {
         method: 'POST',
         body: data,
       });
       const result = await res.json();
-      if (res.ok && result.fileUrl) {
-        setFormData((prev) => ({ ...prev, [field]: result.fileUrl }));
-        setStatusMsg({ type: 'success', text: 'फाईल यशस्वीरित्या अपलोड केली.' });
+      const uploadedUrl = result.url || result.fileUrl;
+      if (res.ok && uploadedUrl) {
+        setFormData((prev) => ({ ...prev, [field]: uploadedUrl }));
+        setStatusMsg({ type: 'success', text: `फाईल (${file.name}) यशस्वीरित्या अपलोड झाली.` });
       } else {
         setStatusMsg({ type: 'error', text: result.error || 'अपलोड अयशस्वी.' });
       }
     } catch {
-      setStatusMsg({ type: 'error', text: 'सर्व्हर त्रुटी.' });
+      setStatusMsg({ type: 'error', text: 'सर्व्हरशी संपर्क साधताना त्रुटी.' });
     } finally {
-      setUploadingLogo(false);
+      setUploadingField(null);
+      e.target.value = '';
     }
   };
 
@@ -241,11 +250,12 @@ export default function AdminSettingsPage() {
                   placeholder="/images/logo.png"
                   className="flex-1 px-3 py-2 rounded-xl border border-gold-300 text-xs focus:ring-2 focus:ring-saffron-500 bg-ivory-50/50"
                 />
-                <label className="cursor-pointer px-3 py-2 rounded-xl bg-gold-100 hover:bg-gold-200 text-charcoal-800 text-xs font-semibold flex items-center gap-1 transition">
+                <label className={`cursor-pointer px-3 py-2 rounded-xl bg-gold-100 hover:bg-gold-200 text-charcoal-800 text-xs font-semibold flex items-center gap-1 transition ${uploadingField === 'logo_url' ? 'opacity-60 pointer-events-none' : ''}`}>
                   <UploadCloud className="w-3.5 h-3.5" />
-                  {uploadingLogo ? '...' : 'अपलोड'}
+                  {uploadingField === 'logo_url' ? 'अपलोड होत आहे...' : 'अपलोड'}
                   <input
                     type="file"
+                    disabled={uploadingField !== null}
                     accept="image/png,image/jpeg,image/webp,image/svg+xml"
                     onChange={(e) => handleFileUpload(e, 'logo_url')}
                     className="hidden"
@@ -274,11 +284,12 @@ export default function AdminSettingsPage() {
                   placeholder="/favicon.ico"
                   className="flex-1 px-3 py-2 rounded-xl border border-gold-300 text-xs focus:ring-2 focus:ring-saffron-500 bg-ivory-50/50"
                 />
-                <label className="cursor-pointer px-3 py-2 rounded-xl bg-gold-100 hover:bg-gold-200 text-charcoal-800 text-xs font-semibold flex items-center gap-1 transition">
+                <label className={`cursor-pointer px-3 py-2 rounded-xl bg-gold-100 hover:bg-gold-200 text-charcoal-800 text-xs font-semibold flex items-center gap-1 transition ${uploadingField === 'favicon_url' ? 'opacity-60 pointer-events-none' : ''}`}>
                   <UploadCloud className="w-3.5 h-3.5" />
-                  अपलोड
+                  {uploadingField === 'favicon_url' ? 'अपलोड होत आहे...' : 'अपलोड'}
                   <input
                     type="file"
+                    disabled={uploadingField !== null}
                     accept="image/png,image/x-icon,image/svg+xml"
                     onChange={(e) => handleFileUpload(e, 'favicon_url')}
                     className="hidden"

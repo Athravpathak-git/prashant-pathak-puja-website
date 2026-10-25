@@ -38,6 +38,7 @@ export default function AdminProfilePage() {
 
   // Crop Modal state
   const [cropModalOpen, setCropModalOpen] = useState(false);
+  const [isUploadingPhoto, setIsUploadingPhoto] = useState(false);
   const [tempImageSrc, setTempImageSrc] = useState<string>('');
   const [cropTarget, setCropTarget] = useState<'hero' | 'primary' | 'about'>('primary');
 
@@ -87,6 +88,12 @@ export default function AdminProfilePage() {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    if (file.size > 10 * 1024 * 1024) {
+      setMsg({ text: 'प्रतिमेचा आकार कमाल १० MB असावा. / Image must be under 10MB.', type: 'error' });
+      e.target.value = '';
+      return;
+    }
+
     setCropTarget(target);
     const reader = new FileReader();
     reader.onload = () => {
@@ -98,6 +105,7 @@ export default function AdminProfilePage() {
   };
 
   const handleCroppedSave = async (blob: Blob, filename: string) => {
+    setIsUploadingPhoto(true);
     const formData = new FormData();
     formData.append('file', blob, filename);
     formData.append('category', 'guruji_profile');
@@ -111,7 +119,7 @@ export default function AdminProfilePage() {
 
       if (!res.ok) throw new Error(data.error || 'अपलोड त्रुटी.');
 
-      const url = data.url;
+      const url = data.url || data.fileUrl;
       setCropModalOpen(false);
 
       const updated = {
@@ -139,6 +147,8 @@ export default function AdminProfilePage() {
       }
     } catch (err: any) {
       setMsg({ text: err.message, type: 'error' });
+    } finally {
+      setIsUploadingPhoto(false);
     }
   };
 
@@ -392,6 +402,7 @@ export default function AdminProfilePage() {
         imageSrc={tempImageSrc}
         onClose={() => setCropModalOpen(false)}
         onSave={handleCroppedSave}
+        isSaving={isUploadingPhoto}
         aspectRatio={4 / 5}
         title="गुरुजी छायाचित्र संपादन (Crop, Rotate, Zoom & Pan)"
       />

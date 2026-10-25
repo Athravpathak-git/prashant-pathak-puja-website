@@ -137,7 +137,7 @@ export default function AdminGalleryPage() {
         is_featured: false,
         is_hidden: false,
         sort_order: gallery.length + 1,
-        image_url: uploadData.url,
+        image_url: uploadData.url || uploadData.fileUrl,
       });
       setMetaModalOpen(true);
     } catch (err: any) {
@@ -264,11 +264,12 @@ export default function AdminGalleryPage() {
           </button>
 
           {/* Prominent Upload Button */}
-          <label className="px-5 py-2.5 bg-gradient-to-r from-saffron-600 to-maroon-800 hover:from-saffron-700 hover:to-maroon-900 text-white text-xs sm:text-sm font-bold rounded-xl shadow-md border border-gold-400 flex items-center gap-2 cursor-pointer transition transform active:scale-95 shrink-0">
-            <PlusCircle className="w-4 h-4 text-gold-200" />
-            <span>+ नवीन फोटो जोडा (Upload Photo)</span>
+          <label className={`px-5 py-2.5 bg-gradient-to-r from-saffron-600 to-maroon-800 hover:from-saffron-700 hover:to-maroon-900 text-white text-xs sm:text-sm font-bold rounded-xl shadow-md border border-gold-400 flex items-center gap-2 transition transform active:scale-95 shrink-0 ${isProcessing ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}>
+            {isProcessing ? <Loader2 className="w-4 h-4 text-gold-200 animate-spin" /> : <PlusCircle className="w-4 h-4 text-gold-200" />}
+            <span>{isProcessing ? 'अपलोड सुरू आहे...' : '+ नवीन फोटो जोडा (Upload Photo)'}</span>
             <input
               type="file"
+              disabled={isProcessing}
               accept="image/jpeg,image/png,image/webp"
               className="hidden"
               onChange={handleFileSelect}

@@ -14,7 +14,8 @@ import {
   Save,
   X,
   Clock,
-  Upload
+  Upload,
+  Loader2
 } from 'lucide-react';
 import { ImageCropModal } from '@/components/ImageCropModal';
 import { TranslatePairInput, TranslatePairTextarea } from '@/components/admin/AutoTranslate';
@@ -214,9 +215,20 @@ export default function AdminServicesPage() {
     }
   };
 
+  const [isUploadingImg, setIsUploadingImg] = useState(false);
+  const [imgUploadError, setImgUploadError] = useState<string | null>(null);
+
   const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+
+    if (file.size > 10 * 1024 * 1024) {
+      setImgUploadError('प्रतिमेचा आकार कमाल १० MB असावा. / Image must be under 10MB.');
+      e.target.value = '';
+      return;
+    }
+
+    setImgUploadError(null);
     const reader = new FileReader();
     reader.onload = () => {
       setTempImgSrc(reader.result as string);
@@ -227,6 +239,8 @@ export default function AdminServicesPage() {
   };
 
   const handleCroppedSave = async (blob: Blob, filename: string) => {
+    setIsUploadingImg(true);
+    setImgUploadError(null);
     const formData = new FormData();
     formData.append('file', blob, filename);
     formData.append('category', 'services');
@@ -234,11 +248,18 @@ export default function AdminServicesPage() {
     try {
       const res = await fetch('/api/upload', { method: 'POST', body: formData });
       const data = await res.json();
-      if (data.url) {
-        setForm((prev) => ({ ...prev, image_url: data.url }));
+      const uploadedUrl = data.url || data.fileUrl;
+      if (res.ok && uploadedUrl) {
+        setForm((prev) => ({ ...prev, image_url: uploadedUrl }));
+        setCropperOpen(false);
+      } else {
+        setImgUploadError(data.error || 'फोटो अपलोड अयशस्वी.');
       }
     } catch (err) {
       console.error(err);
+      setImgUploadError('सर्व्हरशी संपर्क साधताना त्रुटी.');
+    } finally {
+      setIsUploadingImg(false);
     }
   };
 
@@ -443,6 +464,78 @@ export default function AdminServicesPage() {
                 </div>
               </div>
 
+              {/* Service Primary Image Upload & Preview */}
+              <div className="bg-ivory-50 p-4 rounded-xl border border-gold-300 space-y-2">
+                <label className="block text-xs font-semibold text-maroon-950">
+                  पूजेचे छायाचित्र (Service Primary Photo)
+                </label>
+                <div className="flex flex-col sm:flex-row items-center gap-4">
+                  {form.image_url ? (
+                    <div className="relative w-32 h-24 rounded-lg overflow-hidden border border-gold-400 shrink-0 bg-white">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={form.image_url}
+                        alt="Puja Preview"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  ) : (
+                    <div className="w-32 h-24 rounded-lg border-2 border-dashed border-gold-300 flex flex-col items-center justify-center text-charcoal-400 shrink-0 bg-white">
+                      <Upload className="w-6 h-6 text-gold-500 mb-1" />
+                      <span className="text-[10px]">फोटो नाही</span>
+                    </div>
+                  )}
+
+                  <div className="flex-1 space-y-2 text-xs">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <label
+                        className={`px-3 py-1.5 bg-maroon-800 hover:bg-maroon-900 text-gold-100 rounded-lg font-semibold flex items-center gap-1.5 transition ${
+                          isUploadingImg ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'
+                        }`}
+                      >
+                        {isUploadingImg ? (
+                          <Loader2 className="w-3.5 h-3.5 text-gold-300 animate-spin" />
+                        ) : (
+                          <Upload className="w-3.5 h-3.5 text-gold-300" />
+                        )}
+                        <span>
+                          {isUploadingImg
+                            ? 'अपलोड सुरू...'
+                            : form.image_url
+                            ? 'फोटो बदला (Change Photo)'
+                            : 'फोटो अपलोड करा (Upload Photo)'}
+                        </span>
+                        <input
+                          type="file"
+                          disabled={isUploadingImg}
+                          accept="image/jpeg,image/png,image/webp"
+                          className="hidden"
+                          onChange={handleImageSelect}
+                        />
+                      </label>
+
+                      {form.image_url && (
+                        <button
+                          type="button"
+                          onClick={() => setForm((prev) => ({ ...prev, image_url: '' }))}
+                          className="px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-700 rounded-lg font-semibold border border-red-200"
+                        >
+                          काढून टाका
+                        </button>
+                      )}
+                    </div>
+
+                    <p className="text-[11px] text-charcoal-500">
+                      JPG, PNG किंवा WebP (कमाल १० MB). निवडल्यानंतर आवश्यकतेनुसार क्रॉप व रोटेट करा.
+                    </p>
+
+                    {imgUploadError && (
+                      <p className="text-[11px] text-red-600 font-medium">{imgUploadError}</p>
+                    )}
+                  </div>
+                </div>
+              </div>
+
               {/* Short Description Pair (Auto-Translating) */}
               <TranslatePairTextarea
                 labelMr="संक्षिप्त वर्णन (मराठी)"
@@ -547,6 +640,16 @@ export default function AdminServicesPage() {
           </div>
         </div>
       )}
+      {/* Image Cropper Modal */}
+      <ImageCropModal
+        isOpen={cropperOpen}
+        imageSrc={tempImgSrc}
+        onClose={() => setCropperOpen(false)}
+        onSave={handleCroppedSave}
+        isSaving={isUploadingImg}
+        aspectRatio={4 / 3}
+        title="पूजेचे छायाचित्र संपादन / Crop & Rotate Puja Photo"
+      />
     </div>
   );
 }

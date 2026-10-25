@@ -137,6 +137,8 @@ CREATE TABLE IF NOT EXISTS media (
     height INTEGER,
     category VARCHAR(100) DEFAULT 'general',
     url TEXT NOT NULL,
+    file_data BYTEA,
+    storage_provider VARCHAR(50) DEFAULT 'database',
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 

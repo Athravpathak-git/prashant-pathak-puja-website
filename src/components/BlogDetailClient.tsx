@@ -99,6 +99,17 @@ export function BlogDetailClient({ initialPostId }: BlogDetailClientProps) {
             {getLocalized(post, 'title')}
           </h1>
 
+          {post.featured_image && (
+            <div className="rounded-2xl overflow-hidden border border-[#B58A3A]/40 max-h-[420px] shadow-sm">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={post.featured_image}
+                alt={getLocalized(post, 'title')}
+                className="w-full h-full object-cover max-h-[420px]"
+              />
+            </div>
+          )}
+
           {post.excerpt_mr && (
             <div className="p-5 bg-[#FAF7F0]/80 rounded-2xl border border-[#B58A3A]/40 text-xs sm:text-sm font-serif italic text-[#282321] leading-relaxed shadow-xs">
               {getLocalized(post, 'excerpt')}

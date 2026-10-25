@@ -65,18 +65,26 @@ export function sanitizeString(input: unknown): string {
 }
 
 /**
- * Validates magic bytes for image uploads
+ * Validates magic bytes and file signatures for both image and video uploads
  */
-export function validateImageMagicBytes(buffer: Buffer): { valid: boolean; ext: string | null } {
-  if (buffer.length < 12) return { valid: false, ext: null };
-
-  // JPEG: FF D8 FF
-  if (buffer[0] === 0xff && buffer[1] === 0xd8 && buffer[2] === 0xff) {
-    return { valid: true, ext: 'jpg' };
+export function validateMediaMagicBytes(buffer: Buffer): {
+  valid: boolean;
+  type: 'image' | 'video' | null;
+  ext: string | null;
+  mime: string | null;
+} {
+  if (!buffer || buffer.length < 4) {
+    return { valid: false, type: null, ext: null, mime: null };
   }
 
-  // PNG: 89 50 4E 47 0D 0A 1A 0A
+  // 1. JPEG: FF D8 FF
+  if (buffer.length >= 3 && buffer[0] === 0xff && buffer[1] === 0xd8 && buffer[2] === 0xff) {
+    return { valid: true, type: 'image', ext: 'jpg', mime: 'image/jpeg' };
+  }
+
+  // 2. PNG: 89 50 4E 47 0D 0A 1A 0A
   if (
+    buffer.length >= 8 &&
     buffer[0] === 0x89 &&
     buffer[1] === 0x50 &&
     buffer[2] === 0x4e &&
@@ -86,25 +94,78 @@ export function validateImageMagicBytes(buffer: Buffer): { valid: boolean; ext: 
     buffer[6] === 0x1a &&
     buffer[7] === 0x0a
   ) {
-    return { valid: true, ext: 'png' };
+    return { valid: true, type: 'image', ext: 'png', mime: 'image/png' };
   }
 
-  // WEBP: 'RIFF' .... 'WEBP'
-  const isRiff =
-    buffer[0] === 0x52 &&
-    buffer[1] === 0x49 &&
-    buffer[2] === 0x46 &&
-    buffer[3] === 0x46;
-  const isWebp =
-    buffer[8] === 0x57 &&
-    buffer[9] === 0x45 &&
-    buffer[10] === 0x42 &&
-    buffer[11] === 0x50;
-
-  if (isRiff && isWebp) {
-    return { valid: true, ext: 'webp' };
+  // 3. WEBP: 'RIFF' .... 'WEBP'
+  if (buffer.length >= 12) {
+    const isRiff =
+      buffer[0] === 0x52 &&
+      buffer[1] === 0x49 &&
+      buffer[2] === 0x46 &&
+      buffer[3] === 0x46;
+    const isWebp =
+      buffer[8] === 0x57 &&
+      buffer[9] === 0x45 &&
+      buffer[10] === 0x42 &&
+      buffer[11] === 0x50;
+    if (isRiff && isWebp) {
+      return { valid: true, type: 'image', ext: 'webp', mime: 'image/webp' };
+    }
   }
 
+  // 4. GIF: 'GIF87a' or 'GIF89a'
+  if (buffer.length >= 6 && buffer.subarray(0, 4).toString('ascii') === 'GIF8') {
+    return { valid: true, type: 'image', ext: 'gif', mime: 'image/gif' };
+  }
+
+  // 5. ICO: 00 00 01 00
+  if (
+    buffer.length >= 4 &&
+    buffer[0] === 0x00 &&
+    buffer[1] === 0x00 &&
+    buffer[2] === 0x01 &&
+    buffer[3] === 0x00
+  ) {
+    return { valid: true, type: 'image', ext: 'ico', mime: 'image/x-icon' };
+  }
+
+  // 6. MP4 / M4V / QuickTime: offset 4 'ftyp' or 'moov'
+  if (buffer.length >= 8) {
+    const brand = buffer.subarray(4, 8).toString('ascii');
+    if (brand === 'ftyp' || brand === 'moov') {
+      return { valid: true, type: 'video', ext: 'mp4', mime: 'video/mp4' };
+    }
+  }
+
+  // 7. WebM / Matroska: 1A 45 DF A3 (EBML)
+  if (
+    buffer.length >= 4 &&
+    buffer[0] === 0x1a &&
+    buffer[1] === 0x45 &&
+    buffer[2] === 0xdf &&
+    buffer[3] === 0xa3
+  ) {
+    return { valid: true, type: 'video', ext: 'webm', mime: 'video/webm' };
+  }
+
+  // 8. SVG: safe XML / SVG detection
+  const sample = buffer.subarray(0, 1024).toString('utf8').trim();
+  if (sample.includes('<svg') && !sample.includes('<script') && !sample.includes('javascript:')) {
+    return { valid: true, type: 'image', ext: 'svg', mime: 'image/svg+xml' };
+  }
+
+  return { valid: false, type: null, ext: null, mime: null };
+}
+
+/**
+ * Validates magic bytes for image uploads (backwards compatibility)
+ */
+export function validateImageMagicBytes(buffer: Buffer): { valid: boolean; ext: string | null } {
+  const res = validateMediaMagicBytes(buffer);
+  if (res.valid && res.type === 'image') {
+    return { valid: true, ext: res.ext };
+  }
   return { valid: false, ext: null };
 }
 

@@ -35,6 +35,10 @@ async function init() {
     console.log('[DB-INIT] Verification successful! Applying schema...');
     const schemaSql = fs.readFileSync(path.join(process.cwd(), 'src/lib/schema.sql'), 'utf-8');
     await client.query(schemaSql);
+    await client.query(`
+      ALTER TABLE media ADD COLUMN IF NOT EXISTS file_data BYTEA;
+      ALTER TABLE media ADD COLUMN IF NOT EXISTS storage_provider VARCHAR(50) DEFAULT 'database';
+    `);
     console.log('[DB-INIT] Tables created successfully.');
 
     // 2. Application metadata safety marker
